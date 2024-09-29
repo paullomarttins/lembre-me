@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Lembre-Me</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1 style="text-align: center">Lembro-me de que? 💬</h1>
+    {% if tasks|length < 1 %}
+    <h4 style="text-align: center">Sem tarefas por aqui. Crie algumas agora!</h4>
+    {% else %}
+    <table>
+        <tr>
+            <th>Tarefa</th>
+            <th>Data Criação</th>
+            <!-- <th>Status</th> -->
+            <th>Ação</th>
+        </tr>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.content }}</td>
+            <td>{{ task.dt_inicio.date() }}</td>
+            <!-- <td>{{ task.status }}</td> -->
+            <td>
+                <a href="/delete/{{ task.id }}">Deletar</a>
+                <br>
+                <a href="/update/{{ task.id }}">Editar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <div class="form">
+        <form action="/" method="POST">
+            <input type="text" name="content" id="content" placeholder="Crie uma tarefa..." required>
+            <input type="submit" value="Nova Tarefa">
+        </form>
+    </div>
+</div>
+{% endblock %}
