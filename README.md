@@ -1,2 +1,2 @@
 # lembre-me
-Lembre-me te lembra do que você não lembra!!!
+Lembre-me te lembrar do que não lembro!!!
