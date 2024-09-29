@@ -20,7 +20,7 @@ $ source env/bin/activate
 $ (env) pip install -r requirements.txt
 ```
 
-## 4. Rode seu aplicativo no browser:
+## 4. Execute seu aplicativo no browser (http://localhost:5000):
 ```
-$ (env) puthon app.py
+$ (env) python app.py
 ```
