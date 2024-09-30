@@ -11,6 +11,14 @@
     <div class="form">
         <form action="/update/{{ task.id }}" method="POST">
             <input type="text" name="content" id="content" value="{{ task.content }}" placeholder="Edite sua tarefa..." required>
+            <select name="progress" id="progress">
+                <option value="Em andamento">Em andamento</option>
+                <option value="Pendente">Pendente</option>
+                <option value="Cancelado">Cancelado</option>
+                <option value="Concluído">Concluído</option>
+            </select>
+            <br>
+            <textarea name="observa" id="observa" value="">{{ task.observa }}</textarea>
             <input type="submit" value="Atualizar">
         </form>
     </div>
