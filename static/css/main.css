@@ -1,15 +1,99 @@
-body {
-  margin: 0;
-  font-family: sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=MuseoModerno:ital,wght@0,300;1,300&display=swap');
+
+:root{
+  --background-color: #31363F;
+  --second-color: #222831;
+  --title-color: #76ABAE;
+  --light-color: #EEEEEE;
+  --font-title: "Jura", sans-serif;
+  --font-body: 'Courier New', Courier, monospace;
+  --body-font-size: 0.9375rem;
+  --table-font-size: 0.75rem;
+  --input-font-size: 0.75rem;
+  --title-font-size: 1.5rem;
+  --spacing-top: 0.2em; /* 12px*/
+  --spacing-input: 0.8em; /* 9px*/
+  --input-width: 100%; /* 320px */
+  --button-width: 5rem;
+
 }
 
-.content {
-  margin: 0 auto;
-  width: 400px;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: var(--background-color);
+}
+
+#content {
+  width: 50vw;
+}
+
+#content-title{
+  border-right: 1px solid var(--title-color);
+  margin: 0 auto var(--spacing-top);
+  color: var(--title-color);
+  font-family:  var(--font-body);
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: center;
+  width: 100%;
+  text-transform: uppercase;
+  font-size: var(--title-font-size);
+}
+
+#content-title-2{
+  border-right: none;
+  margin: 0 auto var(--spacing-top);
+  color: var(--title-color);
+  font-family:  var(--font-body);
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: center;
+  width: 100%;
+  text-transform: uppercase;
+  font-size: var(--title-font-size);
+}
+
+.typing-animation{
+  animation: blinkCursor 1s steps(40) infinite normal, 
+    typing 4s steps(40) 1s normal both;
+}
+
+@keyframes typing {
+  from{
+    width: 0;
+  }
+  to{
+    width: 12.5em;
+  }
+  
+}
+
+@keyframes blinkCursor{
+  from {
+    border-right-color: var(--title-color);
+  }
+  to {
+    border-right-color: transparent;
+  }
+}
+ 
 
 table, td, th {
   border: 1px solid #aaa;
+  background-color: var(--light-color);
+  font-family: var(--font-body);
 }
 
 table {
@@ -17,19 +101,73 @@ table {
   width: 100%;
 }
 
-th {
-  height: 30px;
-}
-
 td {
   text-align: center;
   padding: 5px;
+  font-size: var(--body-font-size);
+}
+
+th{
+  font-size: var(--table-font-size);
+  padding: var(--spacing-top);
+}
+
+.first{
+  text-align: justify;
+}
+
+.last{
+  padding: 0;
 }
 
 .form {
-  margin-top: 20px;
+  margin: var(--spacing-input) auto 0;
+  width: var(--input-width);
+  text-align: center;
+
 }
 
-#content {
-  width: 70%;
+form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+.nova-tarefa, .content, .nova-tarefa-2{
+  padding: var(--spacing-top);
+  border: none;
+  background-color: var(--second-color);
+  color: var(--light-color);
+  
+}
+.content {
+  width: 25vw;
+  height: 30px;
+  font-family: var(--font-body);
+  font-size: var(--input-font-size);
+  padding-left: 10px;
+}
+
+.nova-tarefa{
+cursor: pointer;
+font-weight: 700;
+shape-outside: circle();
+clip-path: circle();
+width: 3rem;
+}
+
+
+.inicial {
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: var(--light-color );
+  padding: 0.25em 0.5em;
+  box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+  text-align: center;
+  margin: auto;
+  width: 25vw;
 }
