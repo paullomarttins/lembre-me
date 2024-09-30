@@ -9,11 +9,15 @@ db = SQLAlchemy(app)
 class Tarefa(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(300), nullable=False)
-    status = db.Column(db.Integer, default=0)
+    observa = db.Column(db.String(1000), nullable=True)
     dt_inicio = db.Column(db.DateTime, default=datetime.now)
+    dt_final = db.Column(db.DateTime)
+    dt_priority = db.Column(db.DateTime)
+    priority = db.Column(db.Boolean, default=False)
+    progress = db.Column(db.String(100), default="Novo")
     
-    def __repr__(self):
-        return 'Tarefa %r' % self.id
+    # def __repr__(self):
+    #     return 'Tarefa %r' % self.id
 
 with app.app_context():
     db.create_all()
@@ -55,8 +59,10 @@ def update(id):
     
     if request.method == 'POST':
         task.content = request.form['content']
+        task.progress = request.form['progress']
+        task.observa = request.form['observa']
 
-        if not task.content:
+        if not task.content or not task.progress:
             return redirect('/')
 
         try:
