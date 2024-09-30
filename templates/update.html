@@ -6,7 +6,7 @@
 
 {% block body %}
 <div class="content">
-    <h1 style="text-align: center">Atualize sua tarefa! 💬</h1>
+    <h1 class="content-title">Atualize sua tarefa! 💬</h1>
         
     <div class="form">
         <form action="/update/{{ task.id }}" method="POST">
@@ -19,7 +19,7 @@
             </select>
             <br>
             <textarea name="observa" id="observa" value="">{{ task.observa }}</textarea>
-            <input type="submit" value="Atualizar">
+            <input type="submit" value="+">
         </form>
     </div>
 </div>
