@@ -24,12 +24,8 @@
         {% for task in tasks %}
         <tr>
             <td>{{ task.content }}</td>
-            <td>{{ task.dt_inicio.date() }}</td>
-            {% if dt_final != null %}
-                <td>{{ task.dt_final }}</td>
-            {% else %} 
-                <td>-</td>
-            {% endif %}
+            <td>{{ task.dt_inicio.date() }}</td> <!-- .date() -->
+            <td>{{ task.dt_final }}</td>
             {% if dt_priority != null %}
                 <td>{{ task.dt_priority }}</td>
             {% else %}
