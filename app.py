@@ -65,9 +65,8 @@ def update(id):
         if not task.content or not task.progress:
             return redirect('/')
 
-        if task.progress == 'Concluído' or task.progress == 'Pendente':
+        if task.progress == 'Concluído':
             task.dt_final = datetime.now()
-            task.dt_priority = datetime.now()
         else:
             task.dt_final = None
 
