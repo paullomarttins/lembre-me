@@ -7,7 +7,10 @@
 {% block body %}
 <div class="content">
     <h1 class="content-title" class="typing-animation">Lembro-me de que? 💬</h1>
+<div id="content">
+    <h1 id="content-title" class="typing-animation">Lembro-me de que? 💬</h1>
     {% if tasks|length < 1 %}
+    <div class="inicial">Sem tarefas por aqui. Crie algumas agora!</div>
     <div class="inicial">Sem tarefas por aqui. Crie algumas agora!</div>
     {% else %}
     <table>
@@ -23,25 +26,20 @@
         </tr>
         {% for task in tasks %}
         <tr>
-            <td class="first">{{ task.content }}</td>
-            <td>{{ task.dt_inicio.date() }}</td>
-            {% if dt_final != null %}
-                <td>{{ task.dt_final }}</td>
-            {% else %} 
-                <td>-</td>
-            {% endif %}
+            <td class="first" class="first">{{ task.content }}</td>
+            <td>{{ task.dt_inicio.date() }}</td> <!-- .date() -->
+            <td>{{ task.dt_final }}</td>
             {% if dt_priority != null %}
                 <td>{{ task.dt_priority }}</td>
             {% else %}
                 <td>-</td>
             {% endif %}
             <td>{{ task.progress }}</td>
-            <td><input type="checkbox" name="priority" id="priority" class="last"></td>
+            <td><input class="last" type="checkbox" name="priority" id="priority" class="last"></td>
             <td>
                 <a href="/delete/{{ task.id }}"><img src="/static/images/botao_cancelar.svg"></a>
                 <a href="/update/{{ task.id }}"><img src="/static/images/botao_editar.svg"></a>
             </td>
-<<<<<<< HEAD
             <td>{{ task.observa }}</td>
             <!-- {% if observa == null %}
                 <td>{{ task.observa }}</td>
@@ -55,6 +53,8 @@
 
     <div class="form">
         <form action="/" method="POST">
+            <input type="text" name="content" class="content" placeholder="Crie uma tarefa..." required>
+            <input type="submit" class="nova-tarefa" value="+">
             <input type="text" name="content" class="content" placeholder="Crie uma tarefa..." required>
             <input type="submit" class="nova-tarefa" value="+">
         </form>

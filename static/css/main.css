@@ -33,11 +33,11 @@ body {
   background-color: var(--background-color);
 }
 
-.content {
+#content {
   width: 50vw;
 }
 
-.content-title{
+#content-title{
   border-right: 1px solid var(--title-color);
   margin: 0 auto var(--spacing-top);
   color: var(--title-color);
