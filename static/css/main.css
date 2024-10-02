@@ -33,7 +33,7 @@ body {
   background-color: var(--background-color);
 }
 
-#content {
+.content {
   width: 50vw;
 }
 
@@ -134,14 +134,14 @@ form {
   justify-content: center;
   align-items: flex-start;
 }
-.nova-tarefa, .content, .nova-tarefa-2{
+.nova-tarefa, #content, .nova-tarefa-2{
   padding: var(--spacing-top);
   border: none;
   background-color: var(--second-color);
   color: var(--light-color);
   
 }
-.content {
+#content {
   width: 25vw;
   height: 30px;
   font-family: var(--font-body);
