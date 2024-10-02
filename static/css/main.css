@@ -29,6 +29,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   height: 100vh;
   background-color: var(--background-color);
 }
@@ -46,7 +47,8 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-align: center;
-  width: 100%;
+  background-color: #222831;
+
   text-transform: uppercase;
   font-size: var(--title-font-size);
 }
