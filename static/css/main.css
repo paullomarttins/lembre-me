@@ -29,11 +29,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   height: 100vh;
   background-color: var(--background-color);
 }
 
-#content {
+.content {
   width: 50vw;
 }
 
@@ -46,7 +47,7 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-align: center;
-  width: 100%;
+  background-color: #222831;
   text-transform: uppercase;
   font-size: var(--title-font-size);
 }
@@ -134,14 +135,15 @@ form {
   justify-content: center;
   align-items: flex-start;
 }
-.nova-tarefa, .content, .nova-tarefa-2{
+.nova-tarefa, #content, .nova-tarefa-2{
   padding: var(--spacing-top);
   border: none;
   background-color: var(--second-color);
   color: var(--light-color);
   
 }
-.content {
+
+#content {
   width: 25vw;
   height: 30px;
   font-family: var(--font-body);

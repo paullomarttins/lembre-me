@@ -6,11 +6,12 @@
 
 {% block body %}
 <div class="content">
-    <h1 class="content-title">Atualize sua tarefa! 💬</h1>
+    <h1 id="content-title" class="typing-animation">Atualize sua tarefa! 💬</h1>
         
     <div class="form">
         <form action="/update/{{ task.id }}" method="POST">
             <input type="text" name="content" id="content" value="{{ task.content }}" placeholder="Edite sua tarefa..." required>
+            <input type="submit" value="+" class="nova-tarefa">
             <select name="progress" id="progress">
                 <option value="Em andamento">Em andamento</option>
                 <option value="Pendente">Pendente</option>
