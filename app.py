@@ -11,8 +11,8 @@ class Tarefa(db.Model):
     content = db.Column(db.String(300), nullable=False)
     observa = db.Column(db.String(1000), nullable=True)
     dt_inicio = db.Column(db.DateTime, default=datetime.now)
-    dt_final = db.Column(db.DateTime)
-    dt_priority = db.Column(db.DateTime)
+    dt_final = db.Column(db.Date, default=None)
+    dt_priority = db.Column(db.Date, default=None)
     priority = db.Column(db.Boolean, default=False)
     progress = db.Column(db.String(100), default="Novo")
     
@@ -56,7 +56,7 @@ def delete(id):
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
     task = Tarefa.query.get_or_404(id)
-    
+
     if request.method == 'POST':
         task.content = request.form['content']
         task.progress = request.form['progress']
@@ -64,6 +64,11 @@ def update(id):
 
         if not task.content or not task.progress:
             return redirect('/')
+
+        if task.progress == 'Concluído':
+            task.dt_final = datetime.now()
+        else:
+            task.dt_final = None
 
         try:
             db.session.commit()
