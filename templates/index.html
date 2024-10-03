@@ -15,18 +15,39 @@
         <tr>
             <th>Tarefa</th>
             <th>Data Criação</th>
-            <!-- <th>Status</th> -->
+            <th>Data Finalização</th>
+            <th>Data Prioridade</th>
+            <th>Progresso</th>
+            <th>Prioridade</th>
             <th>Ação</th>
+            <th>Observação</th>
         </tr>
         {% for task in tasks %}
         <tr>
             <td>{{ task.content }}</td>
             <td>{{ task.dt_inicio.date() }}</td>
-            <!-- <td>{{ task.status }}</td> -->
+            {% if dt_final != null %}
+                <td>{{ task.dt_final }}</td>
+            {% else %} 
+                <td>-</td>
+            {% endif %}
+            {% if dt_priority != null %}
+                <td>{{ task.dt_priority }}</td>
+            {% else %}
+                <td>-</td>
+            {% endif %}
+            <td>{{ task.progress }}</td>
+            <td><input type="checkbox" name="priority" id="priority"></td>
             <td>
                 <a href="/delete/{{ task.id }}"><img src="/static/images/botao_excluir.svg"></a>
                 <a href="/update/{{ task.id }}"><img src="/static/images/botao_editar.svg"></a>
             </td>
+            <td>{{ task.observa }}</td>
+            <!-- {% if observa == null %}
+                <td>{{ task.observa }}</td>
+            {% else %}
+                <td>-</td>
+            {% endif %} -->
         </tr>
         {% endfor %}
     </table>
