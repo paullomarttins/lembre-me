@@ -8,22 +8,25 @@ db = SQLAlchemy(app)
 
 class Tarefa(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(300), nullable=False)
-    observa = db.Column(db.String(1000), nullable=True)
+    content = db.Column(db.String(100), nullable=False)
+    observa = db.Column(db.String(1000), nullable=False)
     dt_inicio = db.Column(db.DateTime, default=datetime.now)
-    dt_final = db.Column(db.Date, default=None)
-    dt_priority = db.Column(db.Date, default=None)
+    dt_final = db.Column(db.Date, nullable=False)
+    dt_priority = db.Column(db.Date, nullable=False)
     priority = db.Column(db.Boolean, default=False)
     progress = db.Column(db.String(100), default="Novo")
-    
+
+    # Função para fins de depuração, retorna o ID
     # def __repr__(self):
-    #     return 'Tarefa %r' % self.id
+    #     return f'<Tarefa: {self.id}>'
 
 with app.app_context():
     db.create_all()
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
+    page = request.args.get('page', 1, type=int)
+    
     if request.method == 'POST':
         
         task_content = request.form['content']
@@ -31,7 +34,7 @@ def index():
         
         if not task_content:
             return redirect('/')
-        
+
         try:       
             db.session.add(new_task)
             db.session.commit()
@@ -39,8 +42,10 @@ def index():
         except:
             return 'Algo deu errado ao incluir sua tarefa!'
     else:
-        tasks = Tarefa.query.order_by(Tarefa.dt_inicio).all()
-        return render_template('index.html', tasks=tasks) 
+        # Pagination traz apenas 5 registros
+        tasks = Tarefa.query.paginate(page=page, per_page=5, error_out=False)
+        #tasks = pagination.items
+        return render_template('index.html', tasks=tasks.items, pagination=tasks)
 
 @app.route('/delete/<int:id>')
 def delete(id):
