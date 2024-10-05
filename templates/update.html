@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
+{% include 'header.html' %}
 
-{% block head %}
-<title>Lembre-Me</title>
-{% endblock %}
+{% block title %} Atualizar {% endblock %}
 
 {% block body %}
 <div class="content">
@@ -10,17 +9,20 @@
         
     <div class="form">
         <form action="/update/{{ task.id }}" method="POST">
-            <input type="text" name="content" id="content" value="{{ task.content }}" placeholder="Edite sua tarefa..." required>
-            <input type="submit" value="+" class="nova-tarefa">
-            <select name="progress" id="progress">
-                <option value="Em andamento">Em andamento</option>
-                <option value="Pendente">Pendente</option>
-                <option value="Cancelado">Cancelado</option>
-                <option value="Concluído">Concluído</option>
-            </select>
-            <br>
-            <textarea name="observa" id="observa" value="">{{ task.observa }}</textarea>
-            <input type="submit" value="+">
+            <div>
+                <label for="content">Nome Tarefa</label>
+                <p><input type="text" name="content" id="content" value="{{ task.content }}" placeholder="Edite sua tarefa..." required></p><br>
+                <label for="progress">Status da Tarefa</label>
+                <p><select name="progress" id="content">
+                    <option value="Em andamento">Em andamento</option>
+                    <option value="Pendente">Pendente</option>
+                    <option value="Cancelado">Cancelado</option>
+                    <option value="Concluído">Concluído</option>
+                </select></p><br>
+                <label for="observa">Observação:</label>
+                <p><textarea name="observa" id="content" placeholder="Inclua uma observação...">{{ task.observa }}</textarea></p><br>
+                <input class="nova-tarefa" type="submit" value="+">  
+            </div> 
         </form>
     </div>
 </div>
