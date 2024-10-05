@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
+{% include 'header.html' %}
 
-{% block head %}
-<title>Lembre-Me</title>
-{% endblock %}
+{% block title %} Home {% endblock %}
 
 {% block body %}
 <div class="content">
@@ -10,6 +9,14 @@
     {% if tasks|length < 1 %}
     <div class="inicial">Sem tarefas por aqui. Crie algumas agora!</div>
     {% else %}
+    
+    <div class="form">
+        <form action="/" method="POST">
+            <input type="text" name="content" id="content" placeholder="Crie uma tarefa..." required>
+            <input type="submit" class="nova-tarefa" value="+">
+        </form>
+    </div><br>
+
     <table>
         <tr>
             <th>Tarefa</th>
@@ -23,37 +30,60 @@
         </tr>
         {% for task in tasks %}
         <tr>
-            <td class="first" class="first">{{ task.content }}</td>
-            <td>{{ task.dt_inicio.date() }}</td> <!-- .date() -->
-            <td>{{ task.dt_final }}</td>
-            {% if dt_priority != null %}
+            <td class="first">{{ task.content }}</td>
+            <td>{{ task.dt_inicio.date() }}</td>
+            {% if task.dt_final %}
+                <td>{{ task.dt_final }}</td>
+            {% else %}
+                <td>-</td>
+            {% endif %}
+            {% if task.dt_priority %}
                 <td>{{ task.dt_priority }}</td>
             {% else %}
                 <td>-</td>
             {% endif %}
             <td>{{ task.progress }}</td>
-            <td><input class="last" type="checkbox" name="priority" id="priority" class="last"></td>
+            <td><input class="last" type="checkbox" name="priority" id="priority"></td>
             <td>
-                <a href="/delete/{{ task.id }}"><img src="/static/images/botao_excluir.svg"></a>
-                <a href="/update/{{ task.id }}"><img src="/static/images/botao_editar.svg"></a>
+                <a href="/update/{{ task.id }}"><img src="/static/images/botao_editar.svg" title="Editar"></a>
+                <a href="/delete/{{ task.id }}"><img src="/static/images/botao_excluir.svg" title="Excluir" onclick="return confirm('Deseja excluir essa Tarefa?')"></a>
             </td>
-            <td>{{ task.observa }}</td>
-            <!-- {% if observa == null %}
+            {% if task.observa %}
                 <td>{{ task.observa }}</td>
             {% else %}
-                <td>-</td>
-            {% endif %} -->
+                <td></td>
+            {% endif %}
         </tr>
         {% endfor %}
     </table>
     {% endif %}
+</div><br>
 
-    <div class="form">
-        <form action="/" method="POST">
-            <input type="text" name="content" id="content" placeholder="Crie uma tarefa..." required>
+<div class="center">
+    <div class="pagination">
+        {% if pagination.has_prev %}
+            <a href="/?page={{ pagination.prev_num }}">&raquo;</a>
+        {% else %}
+        <a>&laquo;</a>
+        {% endif %}
 
-            <input type="submit" class="nova-tarefa" value="+">
-        </form>
+        {% for page_num in pagination.iter_pages() %}
+        {% if page_num %}
+        {% if page_num != pagination.page %}
+            <a href="/?page={{ page_num }}">{{ page_num }}</a>
+        {% else %}
+            <a>{{ page_num }}</a>
+        {% endif %}
+        {% else %}
+            <a>...</a>
+        {% endif %}
+        {% endfor %}
+
+        {% if pagination.has_next %}
+            <a href="/?page={{ pagination.next_num }}">&raquo;</a>
+        {% else %}
+            <a>&laquo;</a>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
