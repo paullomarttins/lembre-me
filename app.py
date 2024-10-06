@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, redirect, request, session
+from flask import Flask, render_template, url_for, redirect, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -20,33 +20,39 @@ class Tarefa(db.Model):
     # def __repr__(self):
     #     return f'<Tarefa: {self.id}>'
 
+    def __init__(self, content):
+        self.content = content
+
 with app.app_context():
     db.create_all()
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/')
 def index():
     page = request.args.get('page', 1, type=int)
-    
+
+    # Pagination traz apenas 5 registros
+    tasks = Tarefa.query.paginate(page=page, per_page=5, error_out=False)
+    return render_template('index.html', tasks=tasks.items, pagination=tasks)
+
+@app.route('/insert', methods=['POST', 'GET'])
+def insert():
     if request.method == 'POST':
         
         task_content = request.form['content']
-        new_task = Tarefa(content=task_content)
-        
+        new_task = Tarefa(content=task_content)    
+
         if not task_content:
             return redirect('/')
 
         try:       
             db.session.add(new_task)
             db.session.commit()
-            return redirect('/')
+            #flash("Tarefa Inserida com Sucesso.")
+            
+            return redirect(url_for('index'))
         except:
             return 'Algo deu errado ao incluir sua tarefa!'
-    else:
-        # Pagination traz apenas 5 registros
-        tasks = Tarefa.query.paginate(page=page, per_page=5, error_out=False)
-        #tasks = pagination.items
-        return render_template('index.html', tasks=tasks.items, pagination=tasks)
-
+    
 @app.route('/delete/<int:id>')
 def delete(id):
     task_to_delete = Tarefa.query.get_or_404(id)
@@ -80,9 +86,36 @@ def update(id):
             return redirect('/')
         except:
             return 'Algo deu errado ao atualizar sua tarefa!'
-
     else:
         return render_template('update.html', task=task)
+
+@app.route('/priority/<int:id>', methods=['GET','POST'])
+def priority(id):
+    task = Tarefa.query.get_or_404(id)
+    
+    if not task.dt_final: 
+        task.dt_priority = datetime.now()
+        task.priority = True
+        
+    try:
+        db.session.commit()
+        return redirect('/')
+    except:
+        return 'Erro ao priorizar Tarefa.'
+
+@app.route('/priority/unpriority/<int:id>', methods=['GET','POST'])
+def unpriority(id):
+    task = Tarefa.query.get_or_404(id)
+    
+    if not task.dt_final: 
+        task.dt_priority = None
+        task.priority = False
+        
+    try:
+        db.session.commit()
+        return redirect('/')
+    except:
+        return 'Erro ao remover prioridade.'
 
 if __name__ == "__main__":
     app.run(debug=True)
