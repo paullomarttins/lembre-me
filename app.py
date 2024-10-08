@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, redirect, request, session, flash
+from flask import Flask, render_template, url_for, redirect, request, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -8,20 +8,20 @@ db = SQLAlchemy(app)
 
 class Tarefa(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(100), nullable=False)
-    observa = db.Column(db.String(1000), nullable=False)
+    content = db.Column(db.String(50), nullable=False)
+    observa = db.Column(db.String(200), nullable=False)
     dt_inicio = db.Column(db.DateTime, default=datetime.now)
     dt_final = db.Column(db.Date, nullable=False)
     dt_priority = db.Column(db.Date, nullable=False)
     priority = db.Column(db.Boolean, default=False)
-    progress = db.Column(db.String(100), default="Novo")
+    progress = db.Column(db.String(20), default="Novo")
 
     # Função para fins de depuração, retorna o ID
     # def __repr__(self):
     #     return f'<Tarefa: {self.id}>'
 
-    def __init__(self, content):
-        self.content = content
+    # def __init__(self, content):
+    #     self.content = content
 
 with app.app_context():
     db.create_all()
@@ -46,9 +46,7 @@ def insert():
 
         try:       
             db.session.add(new_task)
-            db.session.commit()
-            #flash("Tarefa Inserida com Sucesso.")
-            
+            db.session.commit()            
             return redirect(url_for('index'))
         except:
             return 'Algo deu errado ao incluir sua tarefa!'
