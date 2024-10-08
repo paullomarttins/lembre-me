@@ -1,29 +1,24 @@
 {% extends 'base.html' %}
 {% include 'header.html' %}
 
-{% block title %} Home {% endblock %}
+{% block head %} 
+<title>Lembre-Me - Home</title>
+{% endblock %}
 
 {% block body %}
 <div class="content">
     <h1 id="content-title" class="typing-animation">Lembro-me de que? 💬</h1>
-    {% if tasks|length < 1 %}
-    <div class="inicial">Sem tarefas por aqui. Crie algumas agora!</div>
-    {% else %}
     
     <div class="form">
-        <form action="{{url_for('insert')}}" method="POST">
+        <form action="{{ url_for('insert') }}" method="POST">
             <input type="text" name="content" id="content" placeholder="Crie uma tarefa..." required>
             <input type="submit" class="nova-tarefa" value="+">
         </form>
     </div><br>
     
-    <!-- {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    {% for message in messages %}
-    {{ message }}    
-    {% endfor %}
-    {% endif %}
-    {% endwith %} -->
+    {% if tasks|length < 1 %}
+    <div class="inicial">Sem tarefas por aqui. Crie algumas agora!</div>
+    {% else %}
 
     <table>
         <tr>
