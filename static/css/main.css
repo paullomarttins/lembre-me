@@ -11,7 +11,7 @@
   --body-font-size: 0.9375rem;
   --table-font-size: 0.75rem;
   --input-font-size: 0.75rem;
-  --title-font-size: 1.5rem;
+  --title-font-size: 3rem;
   --spacing-top: 0.2em; /* 12px*/
   --spacing-input: 0.8em; /* 9px*/
   --input-width: 100%; /* 320px */
@@ -28,7 +28,7 @@
 body {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: column;
   height: 100vh;
   background-color: var(--background-color);
@@ -36,6 +36,10 @@ body {
 
 .content {
   width: 50vw;
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+  justify-content: space-around;
 }
 
 #content-title{
@@ -43,25 +47,10 @@ body {
   margin: 0 auto var(--spacing-top);
   color: var(--title-color);
   font-family:  var(--font-body);
-  font-weight: 400;
+  font-weight: lighter;
   white-space: nowrap;
   overflow: hidden;
   text-align: center;
-  background-color: #222831;
-  text-transform: uppercase;
-  font-size: var(--title-font-size);
-}
-
-#content-title-2{
-  border-right: none;
-  margin: 0 auto var(--spacing-top);
-  color: var(--title-color);
-  font-family:  var(--font-body);
-  font-weight: 400;
-  white-space: nowrap;
-  overflow: hidden;
-  text-align: center;
-  width: 100%;
   text-transform: uppercase;
   font-size: var(--title-font-size);
 }
@@ -159,44 +148,49 @@ clip-path: circle();
 width: 3rem;
 }
 
-
-.inicial {
+nav, .inicial {
   font-family: var(--font-body);
-  font-size: 10px;
+  color: var(--light-color );
+  text-transform: uppercase;
+  text-align: center;
+}
+.inicial {
   letter-spacing: 2px;
   text-decoration: none;
-  text-transform: uppercase;
-  color: var(--light-color );
   padding: 0.25em 0.5em;
   box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
-  text-align: center;
   margin: auto;
   width: 25vw;
+  font-size: 10px;
 }
 
-nav a {
-  color: #d64161;
-  font-size: 3em;
-  margin-left: 50px;
+.nav-link{
+  color: var(--title-color);
+  text-shadow: -1px 0px 1px var(--light-color);
+}
+
+nav{
+  background-color: var(--second-color);
+  width: 100%;
+  font-size: 12px;
+  padding: 8px 0 5px;
+  color:  var(--light-color);
+}
+a {
   text-decoration: none;
-}
 
-.center {
-  text-align: center;
 }
-
 .pagination {
-  display: inline-block;
+  display: flex;
+  flex-direction: row;
 }
 
 .pagination a {
   color: black;
   float: left;
-  padding: 8px 16px;
-  text-decoration: none;
   transition: background-color .3s;
   border: 1px solid #ddd;
-  margin: 0 4px;
+  margin: 0 auto;
 }
 
 .pagination a.active {

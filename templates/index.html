@@ -4,10 +4,11 @@
 {% block title %} Home {% endblock %}
 
 {% block body %}
+<h1 id="content-title" class="typing-animation">Lembro-me de que? 💬</h1>
 <div class="content">
-    <h1 id="content-title" class="typing-animation">Lembro-me de que? 💬</h1>
+    
     {% if tasks|length < 1 %}
-    <div class="inicial">Sem tarefas por aqui. Crie algumas agora!</div>
+    <div class="inicial">Sem tarefas por aqui.</div>
     {% else %}
     
     <div class="form">
@@ -16,7 +17,7 @@
             <input type="submit" class="nova-tarefa" value="+">
         </form>
     </div><br>
-    
+
     <!-- {% with messages = get_flashed_messages() %}
     {% if messages %}
     {% for message in messages %}
@@ -71,7 +72,6 @@
     {% endif %}
 </div><br>
 
-<div class="center">
     <div class="pagination">
         {% if pagination.has_prev %}
             <a href="/?page={{ pagination.prev_num }}">&raquo;</a>
@@ -96,6 +96,5 @@
         {% else %}
             <a>&laquo;</a>
         {% endif %}
-    </div>
 </div>
 {% endblock %}
