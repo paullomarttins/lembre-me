@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% include 'header.html' %}
 
-{% block title %} Atualizar {% endblock %}
+{% block head %}
+<title> Lembre-Me - Atualizar</title>
+{% endblock %}
 
 {% block body %}
 <div class="content">
@@ -20,8 +22,15 @@
                     <option value="Concluído">Concluído</option>
                 </select></p><br>
                 <label for="observa">Observação:</label>
-                <p><textarea name="observa" id="content" placeholder="Inclua uma observação...">{{ task.observa }}</textarea></p><br>
-                <input class="nova-tarefa" type="submit" value="+">  
+                <p>
+                    <textarea name="observa" id="observa" placeholder="Inclua uma observação...">
+                    {% if task.observa %}   
+                    {{ task.observa }}
+                    {% endif %}
+                    </textarea>
+                </p><br>
+                <input class="nova-tarefa" type="submit" value="+" title="Atualizar">
+                <input class="nova-tarefa" type="submit" href="/" value="<" title="Voltar">  
             </div> 
         </form>
     </div>
