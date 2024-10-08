@@ -135,7 +135,7 @@ form {
   justify-content: center;
   align-items: flex-start;
 }
-.nova-tarefa, #content, .nova-tarefa-2{
+.nova-tarefa, #content, #observa, .nova-tarefa-2{
   padding: var(--spacing-top);
   border: none;
   background-color: var(--second-color);
@@ -146,6 +146,14 @@ form {
 #content {
   width: 25vw;
   height: 30px;
+  font-family: var(--font-body);
+  font-size: var(--input-font-size);
+  padding-left: 10px;
+}
+
+#observa {
+  width: 25vw;
+  height: 90px;
   font-family: var(--font-body);
   font-size: var(--input-font-size);
   padding-left: 10px;
