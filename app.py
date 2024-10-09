@@ -3,16 +3,16 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lembre_me.sqlite3'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lembre_me_.sqlite3'
 db = SQLAlchemy(app)
 
 class Tarefa(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(50), nullable=False)
-    observa = db.Column(db.String(200), nullable=False)
+    observa = db.Column(db.String(200), default=None, nullable=True)
     dt_inicio = db.Column(db.DateTime, default=datetime.now)
-    dt_final = db.Column(db.Date, nullable=False)
-    dt_priority = db.Column(db.Date, nullable=False)
+    dt_final = db.Column(db.Date, nullable=True)
+    dt_priority = db.Column(db.Date, nullable=True)
     priority = db.Column(db.Boolean, default=False)
     progress = db.Column(db.String(20), default="Novo")
 
@@ -30,7 +30,7 @@ with app.app_context():
 def index():
     page = request.args.get('page', 1, type=int)
 
-    # Pagination traz apenas 5 registros
+    # Pagination retorna apenas 5 registros
     tasks = Tarefa.query.paginate(page=page, per_page=5, error_out=False)
     return render_template('index.html', tasks=tasks.items, pagination=tasks)
 
