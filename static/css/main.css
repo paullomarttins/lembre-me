@@ -195,6 +195,7 @@ nav a {
 
 .pagination {
   display: inline-block;
+  padding: 1rem;
 }
 
 .pagination a {
