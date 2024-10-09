@@ -6,8 +6,8 @@
 {% endblock %}
 
 {% block body %}
+<h1 id="content-title" class="typing-animation">Lembro-me de que? 💬</h1>
 <div class="content">
-    <h1 id="content-title" class="typing-animation">Lembro-me de que? 💬</h1>
     <!-- Form cadastro de Tarefa -->
     <div class="form">
         <form action="{{ url_for('insert') }}" method="POST">
@@ -15,7 +15,7 @@
             <input type="submit" class="nova-tarefa" value="+" title="Criar Tarefa">
         </form>
     </div><br>
-    
+
     {% if tasks|length < 1 %}
     <div class="inicial">Sem tarefas por aqui. Crie algumas agora!</div>
     {% else %}
@@ -64,8 +64,7 @@
         {% endfor %}
     </table>
     <!-- Paginador -->
-    <div class="center">
-        <div class="pagination">
+            <div class="pagination">
             {% if pagination.has_prev %}
                 <a href="/?page={{ pagination.prev_num }}">&raquo;</a>
             {% else %}
@@ -90,7 +89,6 @@
                 <a hidden>&laquo;</a>
             {% endif %}
         </div>
-    </div>
     {% endif %}
 </div><br>
 {% endblock %}
