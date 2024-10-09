@@ -8,11 +8,11 @@
 {% block body %}
 <div class="content">
     <h1 id="content-title" class="typing-animation">Lembro-me de que? 💬</h1>
-    
+    <!-- Form cadastro de Tarefa -->
     <div class="form">
         <form action="{{ url_for('insert') }}" method="POST">
             <input type="text" name="content" id="content" placeholder="Crie uma tarefa..." required>
-            <input type="submit" class="nova-tarefa" value="+">
+            <input type="submit" class="nova-tarefa" value="+" title="Criar Tarefa">
         </form>
     </div><br>
     
@@ -63,34 +63,34 @@
         </tr>
         {% endfor %}
     </table>
+    <!-- Paginador -->
+    <div class="center">
+        <div class="pagination">
+            {% if pagination.has_prev %}
+                <a href="/?page={{ pagination.prev_num }}">&raquo;</a>
+            {% else %}
+            <a>&laquo;</a>
+            {% endif %}
+    
+            {% for page_num in pagination.iter_pages() %}
+            {% if page_num %}
+            {% if page_num != pagination.page %}
+                <a href="/?page={{ page_num }}">{{ page_num }}</a>
+            {% else %}
+                <a>{{ page_num }}</a>
+            {% endif %}
+            {% else %}
+                <a>...</a>
+            {% endif %}
+            {% endfor %}
+    
+            {% if pagination.has_next %}
+                <a href="/?page={{ pagination.next_num }}">&raquo;</a>
+            {% else %}
+                <a>&laquo;</a>
+            {% endif %}
+        </div>
+    </div>
     {% endif %}
 </div><br>
-
-<div class="center">
-    <div class="pagination">
-        {% if pagination.has_prev %}
-            <a href="/?page={{ pagination.prev_num }}">&raquo;</a>
-        {% else %}
-        <a>&laquo;</a>
-        {% endif %}
-
-        {% for page_num in pagination.iter_pages() %}
-        {% if page_num %}
-        {% if page_num != pagination.page %}
-            <a href="/?page={{ page_num }}">{{ page_num }}</a>
-        {% else %}
-            <a>{{ page_num }}</a>
-        {% endif %}
-        {% else %}
-            <a>...</a>
-        {% endif %}
-        {% endfor %}
-
-        {% if pagination.has_next %}
-            <a href="/?page={{ pagination.next_num }}">&raquo;</a>
-        {% else %}
-            <a>&laquo;</a>
-        {% endif %}
-    </div>
-</div>
 {% endblock %}
