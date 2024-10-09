@@ -69,7 +69,7 @@
             {% if pagination.has_prev %}
                 <a href="/?page={{ pagination.prev_num }}">&raquo;</a>
             {% else %}
-            <a>&laquo;</a>
+                <a>&laquo;</a>
             {% endif %}
     
             {% for page_num in pagination.iter_pages() %}
@@ -87,7 +87,7 @@
             {% if pagination.has_next %}
                 <a href="/?page={{ pagination.next_num }}">&raquo;</a>
             {% else %}
-                <a>&laquo;</a>
+                <a hidden>&laquo;</a>
             {% endif %}
         </div>
     </div>
