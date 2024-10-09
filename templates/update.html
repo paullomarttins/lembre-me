@@ -23,14 +23,14 @@
                 </select></p><br>
                 <label for="observa">Observação:</label>
                 <p>
-                    <textarea name="observa" id="observa" placeholder="Inclua uma observação...">
+                    <textarea name="observa" id="observa" maxlength="200" placeholder="Inclua uma observação...">
                     {% if task.observa %}   
                     {{ task.observa }}
                     {% endif %}
                     </textarea>
                 </p><br>
-                <input class="nova-tarefa" type="submit" value="+" title="Atualizar">
-                <input class="nova-tarefa" type="submit" href="/" value="<" title="Voltar">  
+                <input class="nova-tarefa" type="submit" value="+" title="Atualizar" onclick="return confirm('Tem certeza que deseja alterar essa Tarefa?')">
+                <a href="/"><button class="nova-tarefa" type="button" title="Voltar"><</button></a>  
             </div> 
         </form>
     </div>
