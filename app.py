@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for, redirect, request, session
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import desc, asc, func
 from datetime import datetime
 
 app = Flask(__name__)
@@ -13,7 +14,8 @@ class Tarefa(db.Model):
     dt_inicio = db.Column(db.DateTime, default=datetime.now)
     dt_final = db.Column(db.Date, nullable=True)
     dt_priority = db.Column(db.Date, nullable=True)
-    priority = db.Column(db.Boolean, default=False)
+    #priority = db.Column(db.Boolean, default=False)
+    priority = db.Column(db.Integer, default=0)
     progress = db.Column(db.String(20), default="Novo")
 
     # Função para fins de depuração, retorna o ID
@@ -31,7 +33,7 @@ def index():
     page = request.args.get('page', 1, type=int)
 
     # Pagination retorna apenas 5 registros
-    tasks = Tarefa.query.paginate(page=page, per_page=5, error_out=False)
+    tasks = Tarefa.query.order_by(desc(Tarefa.dt_priority)).paginate(page=page, per_page=5, error_out=False)
     return render_template('index.html', tasks=tasks.items, pagination=tasks)
 
 @app.route('/insert', methods=['POST', 'GET'])
@@ -90,16 +92,23 @@ def update(id):
 @app.route('/priority/<int:id>', methods=['GET','POST'])
 def priority(id):
     task = Tarefa.query.get_or_404(id)
+    qt_priority = db.session.query(func.sum(Tarefa.priority)).filter().all()
+    num_priority = qt_priority[0][0] # Converte a tupla em integer
     
-    if not task.dt_final: 
-        task.dt_priority = datetime.now()
-        task.priority = True
-        
-    try:
-        db.session.commit()
-        return redirect('/')
-    except:
-        return 'Erro ao priorizar Tarefa.'
+    # Fixando apenas 3 prioridades
+    if num_priority <= 2 and task.progress != 'Pendente': 
+
+        if not task.dt_final: 
+            task.dt_priority = datetime.now()
+            task.priority = 1
+            
+        try:
+            db.session.commit()
+            return redirect('/')
+        except:
+            return 'Erro ao priorizar Tarefa.'
+    else:
+        return 'Você não pode ter mais de 3 prioridades abertas ou com status "Pedente".'
 
 @app.route('/priority/unpriority/<int:id>', methods=['GET','POST'])
 def unpriority(id):
@@ -107,7 +116,7 @@ def unpriority(id):
     
     if not task.dt_final: 
         task.dt_priority = None
-        task.priority = False
+        task.priority = 0
         
     try:
         db.session.commit()
