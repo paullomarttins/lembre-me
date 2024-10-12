@@ -191,15 +191,18 @@ a {
 .pagination {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  gap: 5px;
   padding: 1rem;
 }
 
 .pagination a {
-  color: black;
+  color: white;
   float: left;
+  padding: 8px 16px;
+  text-decoration: none;
   transition: background-color .3s;
-  border: 1px solid #ddd;
-  margin: 0 auto;
+  /* margin: 0 auto; */
 }
 
 .pagination a.active {
@@ -209,3 +212,20 @@ a {
 }
 
 .pagination a:hover:not(.active) {background-color: #ddd;}
+
+.flashes {
+  padding: 12px;
+  border-radius: 3px;
+  background-color: darkkhaki;
+  color: black;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.btn_close {
+  margin-left: 20px;
+  font-weight: bold;
+  line-height: 15px;
+  color: black;
+  float: right;
+}
