@@ -1,9 +1,11 @@
-from flask import Flask, render_template, url_for, redirect, request, session
+from flask import Flask, render_template, url_for, redirect, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import desc, asc, func
 from datetime import datetime
+from os import environ
 
 app = Flask(__name__)
+app.secret_key = environ.get('SECRET_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lembre_me.sqlite3'
 db = SQLAlchemy(app)
 
@@ -14,13 +16,12 @@ class Tarefa(db.Model):
     dt_inicio = db.Column(db.DateTime, default=datetime.now)
     dt_final = db.Column(db.Date, nullable=True)
     dt_priority = db.Column(db.Date, nullable=True)
-    #priority = db.Column(db.Boolean, default=False)
     priority = db.Column(db.Integer, default=0)
     progress = db.Column(db.String(20), default="Novo")
 
     # Função para fins de depuração, retorna o ID
-    # def __repr__(self):
-    #     return f'<Tarefa: {self.id}>'
+    def __repr__(self):
+        return f'<Tarefa: {self.id}>'
 
     # def __init__(self, content):
     #     self.content = content
@@ -51,7 +52,8 @@ def insert():
             db.session.commit()            
             return redirect(url_for('index'))
         except:
-            return 'Algo deu errado ao incluir sua tarefa!'
+            flash('Algo deu errado ao incluir sua tarefa!')
+            return redirect(url_for('index'))
     
 @app.route('/delete/<int:id>')
 def delete(id):
@@ -62,7 +64,8 @@ def delete(id):
         db.session.commit()
         return redirect('/')
     except:
-        return 'Algo deu errado ao excluir sua tarefa!'
+        flash('Algo deu errado ao excluir sua tarefa!')
+        return redirect(url_for('index'))
 
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
@@ -85,16 +88,17 @@ def update(id):
             db.session.commit()
             return redirect('/')
         except:
-            return 'Algo deu errado ao atualizar sua tarefa!'
+            flash('Algo deu errado ao atualizar sua tarefa!')
+            return redirect(url_for('index'))
     else:
         return render_template('update.html', task=task)
 
 @app.route('/priority/<int:id>', methods=['GET','POST'])
 def priority(id):
     task = Tarefa.query.get_or_404(id)
-    qt_priority = db.session.query(func.sum(Tarefa.priority)).filter().all()
+    qt_priority = db.session.query(func.sum(Tarefa.priority)).all()
     num_priority = qt_priority[0][0] # Converte a tupla em integer
-    
+
     # Fixando apenas 3 prioridades
     if num_priority <= 2 and task.progress != 'Pendente': 
 
@@ -106,9 +110,11 @@ def priority(id):
             db.session.commit()
             return redirect('/')
         except:
-            return 'Erro ao priorizar Tarefa.'
+            flash('Erro ao priorizar Tarefa.')
+            return redirect(url_for('index'))
     else:
-        return 'Você não pode ter mais de 3 prioridades abertas ou com status "Pedente".'
+        flash('Você não pode ter mais de 3 prioridades abertas ou com status "Pendente"')
+        return redirect(url_for('index'))
 
 @app.route('/priority/unpriority/<int:id>', methods=['GET','POST'])
 def unpriority(id):
@@ -122,7 +128,8 @@ def unpriority(id):
         db.session.commit()
         return redirect('/')
     except:
-        return 'Erro ao remover prioridade.'
+        flash('Erro ao remover prioridade.')
+        return redirect(url_for('index'))
 
 if __name__ == "__main__":
     app.run(debug=True)
