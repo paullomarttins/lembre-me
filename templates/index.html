@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% include 'header.html' %}
+{% include 'message.html'%}
 
 {% block head %} 
 <title>Lembre-Me - Home</title>
@@ -11,7 +12,7 @@
     <!-- Form cadastro de Tarefa -->
     <div class="form">
         <form action="{{ url_for('insert') }}" method="POST">
-            <input type="text" name="content" id="content" placeholder="Crie uma tarefa..." required>
+            <input type="text" name="content" id="content" placeholder="Crie uma tarefa..." autofocus required>
             <input type="submit" class="nova-tarefa" value="+" title="Criar Tarefa">
         </form>
     </div><br>
@@ -66,21 +67,21 @@
     <!-- Paginador -->
             <div class="pagination">
             {% if pagination.has_prev %}
-                <a href="/?page={{ pagination.prev_num }}">&raquo;</a>
+                <a href="/?page={{ pagination.prev_num }}">&laquo;</a>
             {% else %}
                 <a>&laquo;</a>
             {% endif %}
     
             {% for page_num in pagination.iter_pages() %}
-            {% if page_num %}
-            {% if page_num != pagination.page %}
-                <a href="/?page={{ page_num }}">{{ page_num }}</a>
-            {% else %}
-                <a>{{ page_num }}</a>
-            {% endif %}
-            {% else %}
-                <a>...</a>
-            {% endif %}
+                {% if page_num %}
+                    {% if page_num != pagination.page %}
+                        <a href="/?page={{ page_num }}">{{ page_num }}</a>
+                    {% else %}
+                        <a class="active">{{ page_num }}</a>
+                    {% endif %}
+                {% else %}
+                    <a>...</a>
+                {% endif %}
             {% endfor %}
     
             {% if pagination.has_next %}
