@@ -14,8 +14,8 @@ class Tarefa(db.Model):
     content = db.Column(db.String(50), nullable=False)
     observa = db.Column(db.String(200), default=None, nullable=True)
     dt_inicio = db.Column(db.DateTime, default=datetime.now)
-    dt_final = db.Column(db.Date, nullable=True)
-    dt_priority = db.Column(db.Date, nullable=True)
+    dt_final = db.Column(db.DateTime, nullable=True)
+    dt_priority = db.Column(db.DateTime, nullable=True)
     priority = db.Column(db.Integer, default=0)
     progress = db.Column(db.String(20), default="Novo")
 
@@ -34,7 +34,7 @@ def index():
     page = request.args.get('page', 1, type=int)
 
     # Pagination retorna apenas 5 registros
-    tasks = Tarefa.query.order_by(desc(Tarefa.dt_priority)).paginate(page=page, per_page=5, error_out=False)
+    tasks = Tarefa.query.order_by(desc(Tarefa.priority)).order_by(asc(Tarefa.dt_priority)).paginate(page=page, per_page=5, error_out=False)
     return render_template('index.html', tasks=tasks.items, pagination=tasks)
 
 @app.route('/insert', methods=['POST', 'GET'])
