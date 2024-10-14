@@ -1,13 +1,11 @@
 {% extends 'base.html' %}
 {% include 'header.html' %}
-{% include 'message.html'%}
+{% include 'message.html' %}
 
-{% block head %} 
-<title>Lembre-Me - Home</title>
-{% endblock %}
+{% block title %}Home{% endblock %}
 
 {% block body %}
-<h1 id="content-title" class="typing-animation">Lembro-me de que? 💬</h1>
+<h1 id="content-title" class="typing-animation">Lembro-me do quê? 💬</h1>
 <div class="content">
     <!-- Form cadastro de Tarefa -->
     <div class="form">
@@ -15,7 +13,7 @@
             <input type="text" name="content" id="content" placeholder="Crie uma tarefa..." autofocus required>
             <input type="submit" class="nova-tarefa" value="+" title="Criar Tarefa">
         </form>
-    </div><br>
+    </div>
 
     {% if tasks|length < 1 %}
     <div class="inicial">Sem tarefas por aqui. Crie algumas agora!</div>
@@ -23,9 +21,9 @@
 
     <table>
         <tr>
-            <th>Tarefa</th>
+            <th>Título</th>
             <th>Data Criação</th>
-            <th>Data Finalização</th>
+            <th>Data Final</th>
             <th>Data Prioridade</th>
             <th>Progresso</th>
             <th>Prioridade</th>
@@ -35,14 +33,14 @@
         {% for task in tasks %}
         <tr>
             <td class="first">{{ task.content }}</td>
-            <td>{{ task.dt_inicio.date() }}</td>
+            <td>{{ task.dt_inicio.strftime('%d-%m-%Y %H:%M') }}</td>
             {% if task.dt_final %}
-                <td>{{ task.dt_final }}</td>
+                <td>{{ task.dt_final.strftime('%d-%m-%Y %H:%M') }}</td>
             {% else %}
                 <td>-</td>
             {% endif %}
             {% if task.dt_priority %}
-                <td>{{ task.dt_priority }}</td>
+                <td>{{ task.dt_priority.strftime('%d-%m-%Y %H:%M') }}</td>
             {% else %}
                 <td>-</td>
             {% endif %}
@@ -65,7 +63,7 @@
         {% endfor %}
     </table>
     <!-- Paginador -->
-            <div class="pagination">
+        <div class="pagination">
             {% if pagination.has_prev %}
                 <a href="/?page={{ pagination.prev_num }}">&laquo;</a>
             {% else %}
