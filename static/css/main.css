@@ -114,7 +114,7 @@ th{
   margin: var(--spacing-input) auto 0;
   width: var(--input-width);
   text-align: center;
-
+  padding: 20px;
 }
 
 form {
