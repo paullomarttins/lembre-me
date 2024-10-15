@@ -14,10 +14,9 @@
                 <p><input type="text" name="content" id="content" value="{{ task.content }}" placeholder="Edite sua tarefa..." required></p><br>
                 <label for="progress">Status da Tarefa</label>
                 <p><select name="progress" id="content">
-                    <option value="Em andamento">Em andamento</option>
-                    <option value="Pendente">Pendente</option>
-                    <option value="Cancelado">Cancelado</option>
-                    <option value="Concluído">Concluído</option>
+                    {% for status in fl_status %}
+                        <option value="{{ status }}">{{ status }}</option>
+                    {% endfor %}
                 </select></p><br>
                 <label for="observa">Observação:</label>
                 <p>
