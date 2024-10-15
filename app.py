@@ -70,6 +70,7 @@ def delete(id):
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
     task = Tarefa.query.get_or_404(id)
+    fl_status = ['Em andamento', 'Pendente', 'Cancelado', 'Concluído']
 
     if request.method == 'POST':
         task.content = request.form['content']
@@ -81,8 +82,16 @@ def update(id):
 
         if task.progress == 'Concluído':
             task.dt_final = datetime.now()
+        elif task.progress == 'Cancelado':
+            task.progress = 'Cancelado'
+        elif task.progress == 'Pendente':
+            task.progress = 'Pendente'
+        elif task.progress == 'Em andamento':
+            task.progress = 'Em andamento'
         else:
-            task.dt_final = None
+            #task.dt_final = None
+            flash('Erro! Status inserido inválido.')
+            return redirect('/')
 
         try:
             db.session.commit()
@@ -91,7 +100,7 @@ def update(id):
             flash('Algo deu errado ao atualizar sua tarefa!')
             return redirect(url_for('index'))
     else:
-        return render_template('update.html', task=task)
+        return render_template('update.html', task=task, fl_status=fl_status)
 
 @app.route('/priority/<int:id>', methods=['GET','POST'])
 def priority(id):
