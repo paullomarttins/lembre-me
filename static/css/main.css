@@ -1,28 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=MuseoModerno:ital,wght@0,300;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rozha+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rozha+One&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 :root{
   --background-color: #31363F;
   --second-color: #222831;
   --title-color: #76ABAE;
   --light-color: #EEEEEE;
-  --font-title: "Jura", sans-serif;
-  --font-body: 'Courier New', Courier, monospace;
-  --body-font-size: 0.9375rem;
-  --table-font-size: 0.75rem;
-  --input-font-size: 0.75rem;
-  --title-font-size: 3rem;
-  --spacing-top: 0.2em; /* 12px*/
-  --spacing-input: 0.8em; /* 9px*/
+  --font-title: "Rozha One", serif;
+  --font-body: "Ubuntu Mono", monospace;
+  --body-font-size: 1em;
+  --table-font-size: 0.5em;
+  --input-font-size: 0.5rem;
+  --title-font-size: 0.5em;
+  --spacing-top: 0.2rem; /* 12px*/
+  --spacing-input: 0.8rem; /* 9px*/
   --input-width: 100%; /* 320px */
   --button-width: 5rem;
-
 }
 
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scroll-behavior: smooth;
+
 }
 
 body {
@@ -30,29 +33,68 @@ body {
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
-  height: 100vh;
   background-color: var(--background-color);
+  font-size: var(--body-font-size);
+}
+
+nav{
+  background-color: var(--second-color);
+  width: 100%;
+  font-size: 12px;
+  padding: 8px 0 5px;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+}
+a {
+  text-decoration: none;
+}
+
+table, td, th {
+  border: 2px solid var(--background-color);
+  background-color: var(--second-color);
+  font-family: var(--font-body);
+  color: var(--light-color);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border-radius: 50%;
+}
+
+td {
+  text-align: center;
+  padding: 5px;
+  font-size: var(--body-font-size);
+}
+
+th{
+  font-size: var(--table-font-size);
+  padding: var(--spacing-top);
+  text-transform: uppercase;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+input{
+  border: none;
+}
+
+label{
+padding: 5px;
 }
 
 .content {
-  width: 50vw;
+  width: 90vw;
   display: flex;
   flex-direction: column;
   height: 50vh;
   justify-content: space-around;
-}
-
-#content-title{
-  border-right: 1px solid var(--title-color);
-  margin: 0 auto var(--spacing-top);
-  color: var(--title-color);
-  font-family:  var(--font-body);
-  font-weight: lighter;
-  white-space: nowrap;
-  overflow: hidden;
-  text-align: center;
-  text-transform: uppercase;
-  font-size: var(--title-font-size);
 }
 
 .typing-animation{
@@ -65,7 +107,7 @@ body {
     width: 0;
   }
   to{
-    width: 12.5em;
+    width: 11em;
   }
   
 }
@@ -78,66 +120,31 @@ body {
     border-right-color: transparent;
   }
 }
- 
 
-table, td, th {
-  border: 1px solid #aaa;
-  background-color: var(--light-color);
-  font-family: var(--font-body);
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td {
-  text-align: center;
-  padding: 5px;
-  font-size: var(--body-font-size);
-}
-
-th{
-  font-size: var(--table-font-size);
-  padding: var(--spacing-top);
-}
-
-.first{
+.first {
   text-align: justify;
 }
-
-.last{
-  padding: 0;
-}
-
 .form {
   margin: var(--spacing-input) auto 0;
   width: var(--input-width);
   text-align: center;
-  padding: 20px;
+  padding: 15px 20px;
 }
 
-form {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: flex-start;
-}
-.nova-tarefa, #content, #observa, .nova-tarefa-2{
+.nova-tarefa, #content, #observa, .nova-tarefa-2, #content-title, #content-progress{
   padding: var(--spacing-top);
   border: none;
   background-color: var(--second-color);
   color: var(--light-color);
-  
 }
 
-#content {
+#content, #content-title, #content-progress {
   width: 25vw;
   height: 30px;
   font-family: var(--font-body);
   font-size: var(--input-font-size);
   padding-left: 10px;
+  outline:none; /* remove a borda no adc tarefa*/
 }
 
 #observa {
@@ -150,13 +157,12 @@ form {
 
 .nova-tarefa{
 cursor: pointer;
-font-weight: 700;
 shape-outside: circle();
 clip-path: circle();
 width: 3rem;
 }
 
-nav, .inicial {
+nav, .inicial, .title-head, label {
   font-family: var(--font-body);
   color: var(--light-color );
   text-transform: uppercase;
@@ -177,41 +183,28 @@ nav, .inicial {
   text-shadow: -1px 0px 1px var(--light-color);
 }
 
-nav{
-  background-color: var(--second-color);
-  width: 100%;
-  font-size: 12px;
-  padding: 8px 0 5px;
-  color:  var(--light-color);
-}
-a {
-  text-decoration: none;
-
-}
 .pagination {
   display: flex;
   flex-direction: row;
   justify-content: center;
   gap: 5px;
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 .pagination a {
-  color: white;
-  float: left;
+  color: var(--light-color);
   padding: 8px 16px;
-  text-decoration: none;
   transition: background-color .3s;
-  /* margin: 0 auto; */
 }
 
 .pagination a.active {
-  background-color: #4CAF50;
-  color: white;
-  border: 1px solid #4CAF50;
+  background-color: var(--second-color);
+  color: var(--light-color);
 }
 
-.pagination a:hover:not(.active) {background-color: #ddd;}
+.pagination a:hover:not(.active) {
+  background-color: var(--second-color);
+}
 
 .flashes {
   padding: 12px;
@@ -228,4 +221,15 @@ a {
   line-height: 15px;
   color: black;
   float: right;
+}
+
+.botoes{
+  width: 50%;
+  padding: 10px;
+}
+
+.title-head{
+  background-color: var(--second-color);
+  border-radius: 0 0 5px 5px;
+  padding: 5px;
 }
