@@ -6,7 +6,7 @@
 {% block body %}
 <div class="content">
     <h1 id="content-title" class="typing-animation">Atualize sua tarefa! 💬</h1>
-        
+
     <div class="form">
         <form action="/update/{{ task.id }}" method="POST">
             <div>
@@ -14,21 +14,22 @@
                 <p><input type="text" name="content" id="content" value="{{ task.content }}" placeholder="Edite sua tarefa..." required></p><br>
                 <label for="progress">Status da Tarefa</label>
                 <p><select name="progress" id="content">
+                    <option value="">-- Status --</option>
                     {% for status in fl_status %}
                         <option value="{{ status }}">{{ status }}</option>
                     {% endfor %}
                 </select></p><br>
                 <label for="observa">Observação:</label>
                 <p>
-                    {% if task.observa %}   
+                    {% if task.observa %}
                     <textarea name="observa" id="observa" maxlength="200">{{ task.observa }}</textarea>
                     {% else %}
                     <textarea name="observa" id="observa" maxlength="200" placeholder="Inclua uma observação..."></textarea>
                     {% endif %}
                 </p><br>
                 <input class="nova-tarefa" type="submit" value="+" title="Atualizar" onclick="return confirm('Tem certeza que deseja alterar essa Tarefa?')">
-                <a href="/"><button class="nova-tarefa" type="button" title="Voltar"><</button></a>  
-            </div> 
+                <a href="/tasks"><button class="nova-tarefa" type="button" title="Voltar"><</button></a>
+            </div>
         </form>
     </div>
 </div>
