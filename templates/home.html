@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% include 'header.html' %}
+
+{% block body %}
+<div class="content">
+    <div class="form">
+        <form action="{{ url_for('insert') }}" method="POST">
+            <label>Qual é o seu nome?</label>
+            <input type="text" name="created_by" id="created_by" placeholder="Digite seu nome..." autofocus required>
+            <input type="text" name="content" id="content" placeholder="Crie sua primeira tarefa..." required>
+            <input type="submit" class="nova-tarefa" value="Diga Olá" title="Diga Olá">
+        </form>
+    </div>
+</div>
+{% endblock %}

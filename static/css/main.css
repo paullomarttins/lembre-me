@@ -98,7 +98,7 @@ padding: 5px;
 }
 
 .typing-animation{
-  animation: blinkCursor 1s steps(40) infinite normal, 
+  animation: blinkCursor 1s steps(40) infinite normal,
     typing 4s steps(40) 1s normal both;
 }
 
@@ -109,7 +109,7 @@ padding: 5px;
   to{
     width: 11em;
   }
-  
+
 }
 
 @keyframes blinkCursor{

@@ -1,9 +1,9 @@
 {% with messages = get_flashed_messages() %}
     {% if messages %}
         {% for message in messages %}
-        <div class="flashes" role="alert"> 
+        <div class="flashes" role="alert">
             <strong>{{ message }}</strong>
-            <a class="btn_close" href="/" title="Fechar">x</a>
+            <a class="btn_close" href="/tasks" title="Fechar">x</a>
         </div>
         {% endfor %}
     {% endif %}

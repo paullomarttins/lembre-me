@@ -16,6 +16,7 @@
 
          <label for="content-progress">Status da Tarefa</label>
                 <select name="progress" id="content-progress">
+                    <option value="">-- Status --</option>
                     {% for status in fl_status %}
                         <option value="{{ status }}">{{ status }}</option>
                     {% endfor %}
@@ -28,7 +29,7 @@
                     <textarea name="observa" id="observa" maxlength="200" placeholder="Inclua uma observação..."></textarea>
                     {% endif %}
                 <div class="botoes"><input class="nova-tarefa" type="submit" value="+" title="Atualizar" onclick="return confirm('Tem certeza que deseja alterar essa Tarefa?')">
-                <a href="/"><button class="nova-tarefa" type="button" title="Voltar"><</button></a></div>
+                <a href="/tasks"><button class="nova-tarefa" type="button" title="Voltar"><</button></a></div>
         </form>
     </div>
 </div>
