@@ -56,7 +56,7 @@ body {
 }
 
 .typing-animation{
-  animation: blinkCursor 1s steps(40) infinite normal, 
+  animation: blinkCursor 1s steps(40) infinite normal,
     typing 4s steps(40) 1s normal both;
 }
 
@@ -67,7 +67,7 @@ body {
   to{
     width: 12.5em;
   }
-  
+
 }
 
 @keyframes blinkCursor{
@@ -78,7 +78,7 @@ body {
     border-right-color: transparent;
   }
 }
- 
+
 
 table, td, th {
   border: 1px solid #aaa;
@@ -129,7 +129,7 @@ form {
   border: none;
   background-color: var(--second-color);
   color: var(--light-color);
-  
+
 }
 
 #content {
