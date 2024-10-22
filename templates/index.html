@@ -46,9 +46,9 @@
             {% endif %}
             <td>{{ task.progress }}</td>
             {% if task.priority %}
-                <td><a href="/priority/unpriority/{{ task.id }}"><img src="/static/images/checked.svg" title="Priorizado" onclick="return confirm('Remover prioridade?')"></a></td>
+                <td><a href="/priority/unpriority/{{ task.id }}"><img src="/static/images/checked_white.svg" title="Priorizado" onclick="return confirm('Remover prioridade?')"></a></td>
             {% else %}
-                <td><a href="/priority/{{ task.id }}"><img src="/static/images/unchecked.svg" title="Priorizar" onclick="return confirm('Deseja priorizar essa Tarefa?')"></a></td>
+                <td><a href="/priority/{{ task.id }}"><img src="/static/images/unchecked_white.svg" title="Priorizar" onclick="return confirm('Deseja priorizar essa Tarefa?')"></a></td>
             {% endif %}
             <td>
                 <a href="/update/{{ task.id }}"><img src="/static/images/botao_editar.svg" title="Editar"></a>
@@ -69,7 +69,7 @@
             {% else %}
                 <a>&laquo;</a>
             {% endif %}
-    
+
             {% for page_num in pagination.iter_pages() %}
                 {% if page_num %}
                     {% if page_num != pagination.page %}
@@ -81,7 +81,7 @@
                     <a>...</a>
                 {% endif %}
             {% endfor %}
-    
+
             {% if pagination.has_next %}
                 <a href="/?page={{ pagination.next_num }}">&raquo;</a>
             {% else %}
