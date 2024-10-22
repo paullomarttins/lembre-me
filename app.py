@@ -18,6 +18,7 @@ class Tarefa(db.Model):
     dt_priority = db.Column(db.DateTime, nullable=True)
     priority = db.Column(db.Integer, default=0)
     progress = db.Column(db.String(20), default="Novo")
+    created_by = db.Column(db.String(20), nullable=True)
 
     # Função para fins de depuração, retorna o ID
     def __repr__(self):
@@ -30,31 +31,37 @@ with app.app_context():
     db.create_all()
 
 @app.route('/')
+def home():
+    return render_template('home.html')
+
+@app.route('/tasks')
 def index():
     page = request.args.get('page', 1, type=int)
+    my_status = ['Em andamento', 'Pendente', 'Novo']
 
     # Pagination retorna apenas 5 registros
-    tasks = Tarefa.query.order_by(desc(Tarefa.priority)).order_by(asc(Tarefa.dt_priority)).paginate(page=page, per_page=5, error_out=False)
+    tasks = Tarefa.query.order_by(desc(Tarefa.priority)).order_by(asc(Tarefa.dt_priority)).filter(Tarefa.progress.in_(my_status)).paginate(page=page, per_page=5, error_out=False)
     return render_template('index.html', tasks=tasks.items, pagination=tasks)
 
 @app.route('/insert', methods=['POST', 'GET'])
 def insert():
     if request.method == 'POST':
-        
+
         task_content = request.form['content']
-        new_task = Tarefa(content=task_content)    
+        user_name = request.form['created_by']
+        new_task = Tarefa(content=task_content,created_by=user_name)
 
         if not task_content:
             return redirect('/')
 
-        try:       
+        try:
             db.session.add(new_task)
-            db.session.commit()            
+            db.session.commit()
             return redirect(url_for('index'))
         except:
             flash('Algo deu errado ao incluir sua tarefa!')
             return redirect(url_for('index'))
-    
+
 @app.route('/delete/<int:id>')
 def delete(id):
     task_to_delete = Tarefa.query.get_or_404(id)
@@ -62,7 +69,7 @@ def delete(id):
     try:
         db.session.delete(task_to_delete)
         db.session.commit()
-        return redirect('/')
+        return redirect('/tasks')
     except:
         flash('Algo deu errado ao excluir sua tarefa!')
         return redirect(url_for('index'))
@@ -78,7 +85,7 @@ def update(id):
         task.observa = request.form['observa']
 
         if not task.content or not task.progress:
-            return redirect('/')
+            return redirect('/tasks')
 
         if task.progress == 'Concluído':
             task.dt_final = datetime.now()
@@ -91,11 +98,11 @@ def update(id):
         else:
             #task.dt_final = None
             flash('Erro! Status inserido inválido.')
-            return redirect('/')
+            return redirect('/tasks')
 
         try:
             db.session.commit()
-            return redirect('/')
+            return redirect('/tasks')
         except:
             flash('Algo deu errado ao atualizar sua tarefa!')
             return redirect(url_for('index'))
@@ -109,15 +116,15 @@ def priority(id):
     num_priority = qt_priority[0][0] # Converte a tupla em integer
 
     # Fixando apenas 3 prioridades
-    if num_priority <= 2 and task.progress != 'Pendente': 
+    if num_priority <= 2 and task.progress != 'Pendente':
 
-        if not task.dt_final: 
+        if not task.dt_final:
             task.dt_priority = datetime.now()
             task.priority = 1
-            
+
         try:
             db.session.commit()
-            return redirect('/')
+            return redirect('/tasks')
         except:
             flash('Erro ao priorizar Tarefa.')
             return redirect(url_for('index'))
@@ -128,14 +135,14 @@ def priority(id):
 @app.route('/priority/unpriority/<int:id>', methods=['GET','POST'])
 def unpriority(id):
     task = Tarefa.query.get_or_404(id)
-    
-    if not task.dt_final: 
+
+    if not task.dt_final:
         task.dt_priority = None
         task.priority = 0
-        
+
     try:
         db.session.commit()
-        return redirect('/')
+        return redirect('/tasks')
     except:
         flash('Erro ao remover prioridade.')
         return redirect(url_for('index'))
