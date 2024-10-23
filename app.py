@@ -32,7 +32,7 @@ with app.app_context():
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('home.html', title='Home')
 
 @app.route('/tasks')
 def index():
@@ -41,7 +41,7 @@ def index():
 
     # Pagination retorna apenas 5 registros
     tasks = Tarefa.query.order_by(desc(Tarefa.priority)).order_by(asc(Tarefa.dt_priority)).filter(Tarefa.progress.in_(my_status)).paginate(page=page, per_page=5, error_out=False)
-    return render_template('index.html', tasks=tasks.items, pagination=tasks)
+    return render_template('index.html', tasks=tasks.items, pagination=tasks, title='Tasks')
 
 @app.route('/insert', methods=['POST', 'GET'])
 def insert():
@@ -107,7 +107,7 @@ def update(id):
             flash('Algo deu errado ao atualizar sua tarefa!')
             return redirect(url_for('index'))
     else:
-        return render_template('update.html', task=task, fl_status=fl_status)
+        return render_template('update.html', task=task, fl_status=fl_status, title='Atualizar')
 
 @app.route('/priority/<int:id>', methods=['GET','POST'])
 def priority(id):
