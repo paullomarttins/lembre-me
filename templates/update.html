@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% include 'header.html' %}
 
-{% block title %}Atualizar{% endblock %}
+<title>{{ title }}</title>
 
 {% block body %}
 
@@ -11,25 +11,25 @@
     <div class="form">
         <form action="/update/{{ task.id }}" method="POST">
 
-         <label for="content-title">Título da tarefa</label>
-            <input type="text" name="content" id="content-title" value="{{ task.content }}" placeholder="Edite sua tarefa..." required>
+        <label for="content-title">Título da tarefa</label>
+        <input type="text" name="content" id="content-title" value="{{ task.content }}" placeholder="Edite sua tarefa..." required>
 
-         <label for="content-progress">Status da Tarefa</label>
-                <select name="progress" id="content-progress">
-                    <option value="">-- Status --</option>
-                    {% for status in fl_status %}
-                        <option value="{{ status }}">{{ status }}</option>
-                    {% endfor %}
-                </select>
+        <label for="content-progress">Status da Tarefa</label>
+        <select name="progress" id="content-progress">
+            <option value="">-- Status --</option>
+            {% for status in fl_status %}
+                <option value="{{ status }}">{{ status }}</option>
+            {% endfor %}
+        </select>
 
-         <label for="observa">Observação:</label>
-                    {% if task.observa %}   
-                    <textarea name="observa" id="observa" maxlength="200">{{ task.observa }}</textarea>
-                    {% else %}
-                    <textarea name="observa" id="observa" maxlength="200" placeholder="Inclua uma observação..."></textarea>
-                    {% endif %}
-                <div class="botoes"><input class="nova-tarefa" type="submit" value="+" title="Atualizar" onclick="return confirm('Tem certeza que deseja alterar essa Tarefa?')">
-                <a href="/tasks"><button class="nova-tarefa" type="button" title="Voltar"><</button></a></div>
+        <label for="observa">Observação:</label>
+        {% if task.observa %}
+        <textarea name="observa" id="observa" maxlength="200">{{ task.observa }}</textarea>
+        {% else %}
+        <textarea name="observa" id="observa" maxlength="200" placeholder="Inclua uma observação..."></textarea>
+        {% endif %}
+        <div class="botoes"><input class="nova-tarefa" type="submit" value="+" title="Atualizar" onclick="return confirm('Tem certeza que deseja alterar essa Tarefa?')">
+        <a href="{{ url_for('index') }}"><button class="nova-tarefa" type="button" title="Voltar"><</button></a></div>
         </form>
     </div>
 </div>
