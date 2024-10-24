@@ -32,6 +32,14 @@ with app.app_context():
 
 @app.route('/')
 def home():
+    my_status = ['Em andamento', 'Pendente', 'Novo']
+    tasks = Tarefa.query.filter(Tarefa.progress.in_(my_status))
+
+    if not tasks:
+       return redirect(url_for('home'))
+    else:
+      return redirect(url_for('index'))
+
     return render_template('home.html', title='Home')
 
 @app.route('/tasks')
