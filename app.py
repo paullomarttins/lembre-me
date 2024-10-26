@@ -31,18 +31,6 @@ with app.app_context():
     db.create_all()
 
 @app.route('/')
-def home():
-    my_status = ['Em andamento', 'Pendente', 'Novo']
-    tasks = Tarefa.query.filter(Tarefa.progress.in_(my_status))
-
-    if not tasks:
-       return redirect(url_for('home'))
-    else:
-      return redirect(url_for('index'))
-
-    return render_template('home.html', title='Home')
-
-@app.route('/tasks')
 def index():
     page = request.args.get('page', 1, type=int)
     my_status = ['Em andamento', 'Pendente', 'Novo']
@@ -51,8 +39,8 @@ def index():
     tasks = Tarefa.query.order_by(desc(Tarefa.priority)).order_by(asc(Tarefa.dt_priority)).filter(Tarefa.progress.in_(my_status)).paginate(page=page, per_page=5, error_out=False)
     return render_template('index.html', tasks=tasks.items, pagination=tasks, title='Tasks')
 
-@app.route('/tasks/closed')
-def closer():
+@app.route('/closed')
+def closed():
     page = request.args.get('page', 1, type=int)
     my_status = ['Concluído', 'Cancelado']
 
@@ -85,7 +73,7 @@ def delete(id):
     try:
         db.session.delete(task_to_delete)
         db.session.commit()
-        return redirect('/tasks')
+        return redirect(url_for('index'))
     except:
         flash('Algo deu errado ao excluir sua tarefa!')
         return redirect(url_for('index'))
@@ -101,7 +89,7 @@ def update(id):
         task.observa = request.form['observa']
 
         if not task.content or not task.progress:
-            return redirect('/tasks')
+            return redirect(url_for('index'))
 
         if task.progress == 'Concluído':
             task.dt_final = datetime.now()
@@ -114,11 +102,11 @@ def update(id):
         else:
             #task.dt_final = None
             flash('Erro! Status inserido inválido.')
-            return redirect('/tasks')
+            return redirect(url_for('index'))
 
         try:
             db.session.commit()
-            return redirect('/tasks')
+            return redirect(url_for('index'))
         except:
             flash('Algo deu errado ao atualizar sua tarefa!')
             return redirect(url_for('index'))
@@ -140,7 +128,7 @@ def priority(id):
 
         try:
             db.session.commit()
-            return redirect('/tasks')
+            return redirect(url_for('index'))
         except:
             flash('Erro ao priorizar Tarefa.')
             return redirect(url_for('index'))
@@ -158,7 +146,7 @@ def unpriority(id):
 
     try:
         db.session.commit()
-        return redirect('/tasks')
+        return redirect(url_for('index'))
     except:
         flash('Erro ao remover prioridade.')
         return redirect(url_for('index'))
