@@ -11,11 +11,12 @@
    <div class="form">
         <form action="{{ url_for('insert') }}" method="POST">
             <input type="text" name="content" id="content" autofocus required>
+            <input type="text" name="created_by" id="content" placeholder="Qual é o seu nome..." required>
             <div class="botoes"><input type="submit" class="nova-tarefa" value="+" title="Criar Tarefa"></div>
         </form>
     </div>
     <script>
-        const userName = "{{ created_by }}";
+        const userName = "você";
         document.getElementsByName('content')[0].placeholder="Olá "+ userName +", crie uma tarefa...";
     </script>
     {% if tasks|length < 1 %}
@@ -26,7 +27,7 @@
         <tr>
             <th>Título</th>
             <th>Data Criação</th>
-            <th>Data Final</th>
+            <th>Criado Por</th>
             <th>Data Prioridade</th>
             <th>Progresso</th>
             <th>Prioridade</th>
@@ -37,11 +38,7 @@
         <tr>
             <td class="first">{{ task.content }}</td>
             <td>{{ task.dt_inicio.strftime('%d-%m-%Y %H:%M') }}</td>
-            {% if task.dt_final %}
-                <td>{{ task.dt_final.strftime('%d-%m-%Y %H:%M') }}</td>
-            {% else %}
-                <td>-</td>
-            {% endif %}
+            <td>{{ task.created_by }}</td>
             {% if task.dt_priority %}
                 <td>{{ task.dt_priority.strftime('%d-%m-%Y %H:%M') }}</td>
             {% else %}
