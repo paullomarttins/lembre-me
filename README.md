@@ -1,5 +1,7 @@
 # Lembre-Me
-Lembre-me te lembra do que você não lembra!
+O Lembre-me te lembrando do que você não lembra!
+
+![image](static/images/lembre_1.png)
 
 Faça o clone do repositório em sua máquina local, navegue até a raiz da pasta e siga os passos abaixo:
 
