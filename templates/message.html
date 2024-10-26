@@ -3,7 +3,7 @@
         {% for message in messages %}
         <div class="flashes" role="alert">
             <strong>{{ message }}</strong>
-            <a class="btn_close" href="/tasks" title="Fechar">x</a>
+            <a class="btn_close" href="{{ url_for('index') }}" title="Fechar">x</a>
         </div>
         {% endfor %}
     {% endif %}
