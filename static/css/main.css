@@ -12,6 +12,7 @@
   --font-body: "Ubuntu Mono", monospace;
   --body-font-size: 1em;
   --table-font-size: 0.5em;
+  --table-th-font-size: 1em;
   --input-font-size: 0.9rem;
   --title-font-size: 0.5em;
   --spacing-top: 0.2rem; /* 12px*/
@@ -37,13 +38,21 @@ body {
   font-size: var(--body-font-size);
 }
 
-nav{
+nav {
   background-color: var(--second-color);
   width: 100%;
-  font-size: 12px;
+  font-size: 15px;
   padding: 20px 0 5px;
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
 }
+
+.menu-nav, .nav {
+    font-family: var(--font-body);
+    text-transform: uppercase;
+    color: #EEEEEE;
+    text-align: left;
+}
+
 a {
   text-decoration: none;
 }
@@ -68,7 +77,7 @@ td {
 }
 
 th{
-  font-size: var(--table-font-size);
+  font-size: var(--table-th-font-size);
   padding: var(--spacing-top);
   text-transform: uppercase;
 }
@@ -172,12 +181,13 @@ clip-path: circle();
 width: 3rem;
 }
 
-nav, .inicial, .title-head, label {
+.inicial, .title-head, label {
   font-family: var(--font-body);
   color: var(--light-color );
   text-transform: uppercase;
   text-align: center;
 }
+
 .inicial {
   letter-spacing: 2px;
   text-decoration: none;
@@ -191,6 +201,8 @@ nav, .inicial, .title-head, label {
 .nav-link{
   color: var(--title-color);
   text-shadow: -1px 0px 1px var(--light-color);
+  font-size: 20px;
+  margin-left: 10px;
 }
 
 .pagination {
@@ -218,8 +230,9 @@ nav, .inicial, .title-head, label {
 
 .flashes {
   padding: 12px;
-  border-radius: 3px;
-  background-color: darkkhaki;
+  border-radius: 5px;
+  background-color: khaki;
+  font-family: var(--font-body);
   color: black;
   margin-top: 15px;
   margin-bottom: 16px;
@@ -228,8 +241,8 @@ nav, .inicial, .title-head, label {
 
 .btn_close {
   margin-left: 20px;
-  font-weight: bold;
   line-height: 15px;
+  font-family: var(--font-body);
   color: black;
   float: right;
 }
