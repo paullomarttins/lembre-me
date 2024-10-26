@@ -3,9 +3,12 @@
 {% block body %}
 
 <nav>
-    <a href="{{ url_for('home') }}" class="nav-link">Lembre-me-Project</a>
-    <a href="#">Sobre</a>
-    <a href="#">Admin</a>
+    <div class="nav" id="nav-header">
+        <a href="{{ url_for('home') }}" class="nav-link">Lembre-me-Project</a>
+        <a href="#">Sobre</a>
+        <a href="/tasks/closed">Tarefas</a>
+        <a href="#">Admin</a>
+    </div>
 </nav>
 
 {% endblock %}
