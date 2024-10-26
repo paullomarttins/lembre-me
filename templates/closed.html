@@ -46,7 +46,7 @@
     <!-- Paginador -->
         <div class="pagination">
             {% if pagination.has_prev %}
-                <a href="/tasks/closed?page={{ pagination.prev_num }}">&laquo;</a>
+                <a href="/closed?page={{ pagination.prev_num }}">&laquo;</a>
             {% else %}
                 <a>&laquo;</a>
             {% endif %}
@@ -54,7 +54,7 @@
             {% for page_num in pagination.iter_pages() %}
                 {% if page_num %}
                     {% if page_num != pagination.page %}
-                        <a href="/tasks/closed?page={{ page_num }}">{{ page_num }}</a>
+                        <a href="/closed?page={{ page_num }}">{{ page_num }}</a>
                     {% else %}
                         <a class="active">{{ page_num }}</a>
                     {% endif %}
@@ -64,7 +64,7 @@
             {% endfor %}
 
             {% if pagination.has_next %}
-                <a href="/tasks/closed?page={{ pagination.next_num }}">&raquo;</a>
+                <a href="/closed?page={{ pagination.next_num }}">&raquo;</a>
             {% else %}
                 <a hidden>&laquo;</a>
             {% endif %}
