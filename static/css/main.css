@@ -221,6 +221,7 @@ nav, .inicial, .title-head, label {
   border-radius: 3px;
   background-color: darkkhaki;
   color: black;
+  margin-top: 15px;
   margin-bottom: 16px;
   opacity: 0.5;
 }
