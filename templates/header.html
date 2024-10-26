@@ -4,10 +4,10 @@
 
 <nav>
     <div class="nav" id="nav-header">
-        <a href="{{ url_for('home') }}" class="nav-link">Lembre-me-Project</a>
-        <a href="#">Sobre</a>
-        <a href="/tasks/closed">Tarefas</a>
-        <a href="#">Admin</a>
+        <a href="{{ url_for('index') }}" class="nav-link" title="Home">Lembre-me-Project</a>
+        <a href="#" class="menu-nav" title="Sobre">Sobre</a>
+        <a href="{{ url_for('closed') }}" class="menu-nav" title="Tarefas">Tarefas</a>
+        <a href="#" class="menu-nav" title="RSS">RSS</a>
     </div>
 </nav>
 
