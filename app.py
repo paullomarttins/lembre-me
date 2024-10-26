@@ -51,6 +51,14 @@ def index():
     tasks = Tarefa.query.order_by(desc(Tarefa.priority)).order_by(asc(Tarefa.dt_priority)).filter(Tarefa.progress.in_(my_status)).paginate(page=page, per_page=5, error_out=False)
     return render_template('index.html', tasks=tasks.items, pagination=tasks, title='Tasks')
 
+@app.route('/tasks/closed')
+def closer():
+    page = request.args.get('page', 1, type=int)
+    my_status = ['Concluído', 'Cancelado']
+
+    tasks = Tarefa.query.filter(Tarefa.progress.in_(my_status)).paginate(page=page, per_page=5, error_out=False)
+    return render_template('closed.html', tasks=tasks.items, pagination=tasks, title='Closed')
+
 @app.route('/insert', methods=['POST', 'GET'])
 def insert():
     if request.method == 'POST':
