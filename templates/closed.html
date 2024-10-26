@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% include 'header.html' %}
+
+<title>{{ title }}</title>
+
+{% block body %}
+<div class="content">
+    {% if tasks|length < 1 %}
+        <div class="inicial">Sem tarefas por aqui!</div>
+    {% else %}
+
+    <table>
+        <tr>
+            <th>Título</th>
+            <th>Data Criação</th>
+            <th>Data Fim</th>
+            <th>Criado Por</th>
+            <th>Data Prioridade</th>
+            <th>Progresso</th>
+            <th>Observação</th>
+        </tr>
+        {% for task in tasks %}
+        <tr>
+            <td class="first">{{ task.content }}</td>
+            <td>{{ task.dt_inicio.strftime('%d-%m-%Y %H:%M') }}</td>
+            {% if task.dt_final %}
+                <td>{{ task.dt_final.strftime('%d-%m-%Y %H:%M') }}</td>
+            {% else %}
+                <td>-</td>
+            {% endif %}
+            <td>{{ task.created_by }}</td>
+            {% if task.priority %}
+                <td>{{ task.dt_priority.strftime('%d-%m-%Y %H:%M') }}</td>
+            {% else %}
+                <td>-</td>
+            {% endif %}
+            <td>{{ task.progress }}</td>
+            {% if task.observa %}
+                <td>{{ task.observa }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+    <!-- Paginador -->
+        <div class="pagination">
+            {% if pagination.has_prev %}
+                <a href="/tasks/closed?page={{ pagination.prev_num }}">&laquo;</a>
+            {% else %}
+                <a>&laquo;</a>
+            {% endif %}
+
+            {% for page_num in pagination.iter_pages() %}
+                {% if page_num %}
+                    {% if page_num != pagination.page %}
+                        <a href="/tasks/closed?page={{ page_num }}">{{ page_num }}</a>
+                    {% else %}
+                        <a class="active">{{ page_num }}</a>
+                    {% endif %}
+                {% else %}
+                    <a>...</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if pagination.has_next %}
+                <a href="/tasks/closed?page={{ pagination.next_num }}">&raquo;</a>
+            {% else %}
+                <a hidden>&laquo;</a>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
