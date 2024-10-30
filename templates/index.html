@@ -24,43 +24,51 @@
     {% else %}
 
     <table>
-        <tr>
-            <th>Título</th>
-            <th>Data Criação</th>
-            <th>Criado Por</th>
-            <th>Data Prioridade</th>
-            <th>Progresso</th>
-            <th>Prioridade</th>
-            <th>Ação</th>
-            <th>Observação</th>
-        </tr>
-        {% for task in tasks %}
-        <tr>
-            <td class="first">{{ task.content }}</td>
-            <td>{{ task.dt_inicio.strftime('%d-%m-%Y %H:%M') }}</td>
-            <td>{{ task.created_by }}</td>
-            {% if task.dt_priority %}
-                <td>{{ task.dt_priority.strftime('%d-%m-%Y %H:%M') }}</td>
-            {% else %}
-                <td>-</td>
-            {% endif %}
-            <td>{{ task.progress }}</td>
-            {% if task.priority %}
-                <td><a href="/priority/unpriority/{{ task.id }}"><img src="/static/images/checked_2.svg" title="Priorizado" onclick="return confirm('Remover prioridade?')"></a></td>
-            {% else %}
-                <td><a href="/priority/{{ task.id }}"><img src="/static/images/unchecked_2.svg" title="Priorizar" onclick="return confirm('Deseja priorizar essa Tarefa?')"></a></td>
-            {% endif %}
-            <td>
-                <a href="/update/{{ task.id }}"><img src="/static/images/botao_editar.svg" title="Editar"></a>
-                <a href="/delete/{{ task.id }}"><img src="/static/images/botao_excluir.svg" title="Excluir" onclick="return confirm('Deseja excluir essa Tarefa?')"></a>
-            </td>
-            {% if task.observa %}
-                <td>{{ task.observa }}</td>
-            {% else %}
-                <td></td>
-            {% endif %}
-        </tr>
-        {% endfor %}
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Data Criação</th>
+                <th>Atribuído Para</th>
+                <th>Data Prioridade</th>
+                <th>Progresso</th>
+                <th>Prioridade</th>
+                <th>Ação</th>
+                <th>Observação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td class="first">{{ task.content }}</td>
+                <td>{{ task.dt_inicio.strftime('%d-%m-%Y %H:%M') }}</td>
+                {% if task.assigned %}
+                    <td>{{ task.assigned }}</td>
+                {% else %}
+                    <td>-</td>
+                {% endif %}
+                {% if task.dt_priority %}
+                    <td>{{ task.dt_priority.strftime('%d-%m-%Y %H:%M') }}</td>
+                {% else %}
+                    <td>-</td>
+                {% endif %}
+                <td>{{ task.progress }}</td>
+                {% if task.priority %}
+                    <td><a href="/priority/unpriority/{{ task.id }}"><img src="/static/images/checked_3.svg" title="Priorizado" onclick="return confirm('Remover prioridade?')"></a></td>
+                {% else %}
+                    <td><a href="/priority/{{ task.id }}"><img src="/static/images/unchecked_3.svg" title="Priorizar" onclick="return confirm('Deseja priorizar essa Tarefa?')"></a></td>
+                {% endif %}
+                <td>
+                    <a href="/update/{{ task.id }}"><img src="/static/images/botao_editar.svg" title="Editar"></a>
+                    <a href="/delete/{{ task.id }}"><img src="/static/images/botao_excluir.svg" title="Excluir" onclick="return confirm('Deseja excluir essa Tarefa?')"></a>
+                </td>
+                {% if task.observa %}
+                    <td>{{ task.observa }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
     <!-- Paginador -->
         <div class="pagination">
