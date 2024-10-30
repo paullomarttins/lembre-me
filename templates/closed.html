@@ -15,6 +15,7 @@
             <th>Data Criação</th>
             <th>Data Fim</th>
             <th>Criado Por</th>
+            <th>Atribuído Para</th>
             <th>Data Prioridade</th>
             <th>Progresso</th>
             <th>Observação</th>
@@ -29,6 +30,7 @@
                 <td>-</td>
             {% endif %}
             <td>{{ task.created_by }}</td>
+            <td>{{ task.assigned }}</td>
             {% if task.priority %}
                 <td>{{ task.dt_priority.strftime('%d-%m-%Y %H:%M') }}</td>
             {% else %}
