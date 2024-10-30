@@ -16,17 +16,22 @@
 
         <label for="content-progress">Status da Tarefa</label>
         <select name="progress" id="content-progress">
-            <option value="">-- Status --</option>
             {% for status in fl_status %}
                 <option value="{{ status }}">{{ status }}</option>
             {% endfor %}
         </select>
 
+        <label for="created_by">Criado Por</label>
+        <input type="text" name="created_by" id="created_by" value="{{ task.created_by }}" disabled>
+
+        <label for="assigned">Atribuído Para</label>
+        <input type="text" name="assigned" id="assigned" value="{{ task.assigned }}" placeholder="Atribuído para...">
+
         <label for="observa">Observação:</label>
         {% if task.observa %}
-        <textarea name="observa" id="observa" maxlength="200">{{ task.observa }}</textarea>
+            <textarea name="observa" id="observa" maxlength="200">{{ task.observa }}</textarea>
         {% else %}
-        <textarea name="observa" id="observa" maxlength="200" placeholder="Inclua uma observação..."></textarea>
+            <textarea name="observa" id="observa" maxlength="200" placeholder="Inclua uma observação...">{{ task.observa }}</textarea>
         {% endif %}
         <div class="botoes"><input class="nova-tarefa" type="submit" value="+" title="Atualizar" onclick="return confirm('Tem certeza que deseja alterar essa Tarefa?')">
         <a href="{{ url_for('index') }}"><button class="nova-tarefa" type="button" title="Voltar"><</button></a></div>
