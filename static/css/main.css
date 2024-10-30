@@ -95,6 +95,11 @@ input{
   border-radius: 20px;
 }
 
+select {
+  border: none;
+  border-radius: 20px;
+}
+
 label{
 padding: 5px;
 }
@@ -141,7 +146,7 @@ padding: 5px;
   padding: 15px 20px;
 }
 
-.nova-tarefa, #content, #observa, .nova-tarefa-2, #content-title, #content-progress{
+.nova-tarefa, #content, #observa, .nova-tarefa-2, #content-title, #content-progress, #assigned, #created_by {
   padding: var(--spacing-top);
   border: none;
   background-color: var(--second-color);
@@ -156,7 +161,7 @@ padding: 5px;
     color: var(--light-color);
 }
 
-#content, #content-title, #content-progress {
+#content, #content-title, #content-progress, #assigned, #created_by {
   width: 25vw;
   height: 30px;
   margin: 5px 0;
