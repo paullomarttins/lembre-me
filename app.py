@@ -12,17 +12,18 @@ db = SQLAlchemy(app)
 class Tarefa(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(50), nullable=False)
-    observa = db.Column(db.String(200), default=None, nullable=True)
+    observa = db.Column(db.String(200), default="", nullable=True)
     dt_inicio = db.Column(db.DateTime, default=datetime.now)
     dt_final = db.Column(db.DateTime, nullable=True)
     dt_priority = db.Column(db.DateTime, nullable=True)
     priority = db.Column(db.Integer, default=0)
     progress = db.Column(db.String(20), default="Novo")
-    created_by = db.Column(db.String(20), nullable=True)
+    created_by = db.Column(db.String(20), nullable=False)
+    assigned = db.Column(db.String(20), default="", nullable=True)
 
     # Função para fins de depuração, retorna o ID
     def __repr__(self):
-        return f'<Tarefa: {self.id}>'
+        return f'Tarefa: {self.id}'
 
     # def __init__(self, content):
     #     self.content = content
@@ -56,11 +57,12 @@ def insert():
         new_task = Tarefa(content=task_content,created_by=user_name)
 
         if not task_content:
-            return redirect('/')
+            return redirect(url_for('index'))
 
         try:
             db.session.add(new_task)
             db.session.commit()
+            flash('Tarefa criada com sucesso!')
             return redirect(url_for('index'))
         except:
             flash('Algo deu errado ao incluir sua tarefa!')
@@ -73,6 +75,7 @@ def delete(id):
     try:
         db.session.delete(task_to_delete)
         db.session.commit()
+        flash(f'{task_to_delete} excluída com sucesso!')
         return redirect(url_for('index'))
     except:
         flash('Algo deu errado ao excluir sua tarefa!')
@@ -81,11 +84,12 @@ def delete(id):
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
     task = Tarefa.query.get_or_404(id)
-    fl_status = ['Em andamento', 'Pendente', 'Cancelado', 'Concluído']
+    fl_status = ['Novo', 'Em andamento', 'Pendente', 'Cancelado', 'Concluído']
 
     if request.method == 'POST':
         task.content = request.form['content']
         task.progress = request.form['progress']
+        task.assigned = request.form['assigned']
         task.observa = request.form['observa']
 
         if not task.content or not task.progress:
@@ -93,19 +97,15 @@ def update(id):
 
         if task.progress == 'Concluído':
             task.dt_final = datetime.now()
-        elif task.progress == 'Cancelado':
-            task.progress = 'Cancelado'
-        elif task.progress == 'Pendente':
-            task.progress = 'Pendente'
-        elif task.progress == 'Em andamento':
-            task.progress = 'Em andamento'
+        elif task.progress in fl_status:
+            task.progress
         else:
-            #task.dt_final = None
             flash('Erro! Status inserido inválido.')
             return redirect(url_for('index'))
 
         try:
             db.session.commit()
+            flash('Tarefa atualizada com sucesso.')
             return redirect(url_for('index'))
         except:
             flash('Algo deu errado ao atualizar sua tarefa!')
