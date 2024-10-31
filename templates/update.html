@@ -16,6 +16,7 @@
 
         <label for="content-progress">Status da Tarefa</label>
         <select name="progress" id="content-progress">
+            <option value="{{ task.progress }}">{{ task.progress }}</option>
             {% for status in fl_status %}
                 <option value="{{ status }}">{{ status }}</option>
             {% endfor %}
