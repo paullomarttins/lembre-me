@@ -84,7 +84,7 @@ def delete(id):
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
     task = Tarefa.query.get_or_404(id)
-    fl_status = ['Novo', 'Em andamento', 'Pendente', 'Cancelado', 'Concluído']
+    fl_status = ['Em andamento', 'Pendente', 'Cancelado', 'Concluído']
 
     if request.method == 'POST':
         task.content = request.form['content']
@@ -111,7 +111,8 @@ def update(id):
             flash('Algo deu errado ao atualizar sua tarefa!')
             return redirect(url_for('index'))
     else:
-        return render_template('update.html', task=task, fl_status=fl_status, title='Atualizar')
+        new_status = [status for status in fl_status if status != task.progress]
+        return render_template('update.html', task=task, fl_status=new_status, title='Atualizar')
 
 @app.route('/priority/<int:id>', methods=['GET','POST'])
 def priority(id):
@@ -128,6 +129,7 @@ def priority(id):
 
         try:
             db.session.commit()
+            flash(f'{task} priorizada.')
             return redirect(url_for('index'))
         except:
             flash('Erro ao priorizar Tarefa.')
@@ -146,6 +148,7 @@ def unpriority(id):
 
     try:
         db.session.commit()
+        flash(f'{task} prioridade removida.')
         return redirect(url_for('index'))
     except:
         flash('Erro ao remover prioridade.')
