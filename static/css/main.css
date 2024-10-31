@@ -76,6 +76,11 @@ td {
   font-size: var(--body-font-size);
 }
 
+td:last-of-type {
+  width: 400px;
+  white-space: pre-wrap;
+}
+
 th{
   font-size: var(--table-th-font-size);
   padding: var(--spacing-top);
@@ -177,6 +182,7 @@ padding: 5px;
   font-family: var(--font-body);
   font-size: var(--input-font-size);
   padding-left: 10px;
+  border-radius: 5px;
 }
 
 .nova-tarefa{
