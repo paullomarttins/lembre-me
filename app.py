@@ -4,6 +4,8 @@ from sqlalchemy import desc, asc, func
 from datetime import datetime
 from os import environ
 
+from templates.forms import NewTaskForm, UpdateForm
+
 app = Flask(__name__)
 app.secret_key = environ.get('SECRET_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lembre_me.sqlite3'
@@ -25,8 +27,9 @@ class Tarefa(db.Model):
     def __repr__(self):
         return f'Tarefa: {self.id}'
 
-    # def __init__(self, content):
-    #     self.content = content
+    def __init__(self):
+        self.content = content
+        self.created_by = created_by
 
 with app.app_context():
     db.create_all()
@@ -35,10 +38,11 @@ with app.app_context():
 def index():
     page = request.args.get('page', 1, type=int)
     my_status = ['Em andamento', 'Pendente', 'Novo']
+    form = NewTaskForm()
 
     # Pagination retorna apenas 5 registros
     tasks = Tarefa.query.order_by(desc(Tarefa.priority)).order_by(asc(Tarefa.dt_priority)).filter(Tarefa.progress.in_(my_status)).paginate(page=page, per_page=5, error_out=False)
-    return render_template('index.html', tasks=tasks.items, pagination=tasks, title='Tasks')
+    return render_template('index.html', tasks=tasks.items, pagination=tasks, title='Tasks', form=form)
 
 @app.route('/closed')
 def closed():
@@ -85,6 +89,11 @@ def delete(id):
 def update(id):
     task = Tarefa.query.get_or_404(id)
     fl_status = ['Em andamento', 'Pendente', 'Cancelado', 'Concluído']
+    form = UpdateForm()
+    form.content.data = task.content
+    form.created_by.data = task.created_by
+    form.assigned.data = task.assigned
+    form.observa.data = task.observa
 
     if request.method == 'POST':
         task.content = request.form['content']
@@ -112,7 +121,7 @@ def update(id):
             return redirect(url_for('index'))
     else:
         new_status = [status for status in fl_status if status != task.progress]
-        return render_template('update.html', task=task, fl_status=new_status, title='Atualizar')
+        return render_template('update.html', task=task, fl_status=new_status, title='Atualizar', form=form)
 
 @app.route('/priority/<int:id>', methods=['GET','POST'])
 def priority(id):
