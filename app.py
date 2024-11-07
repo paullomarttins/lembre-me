@@ -3,8 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import desc, asc, func
 from datetime import datetime
 from os import environ
-
-from templates.forms import NewTaskForm, UpdateForm
+from forms import NewTaskForm, UpdateForm
 
 app = Flask(__name__)
 app.secret_key = environ.get('SECRET_KEY')
@@ -28,8 +27,8 @@ class Tarefa(db.Model):
         return f'Tarefa: {self.id}'
 
     def __init__(self):
-        self.content = content
-        self.created_by = created_by
+        self.content = self.content
+        self.created_by = self.created_by
 
 with app.app_context():
     db.create_all()
@@ -54,14 +53,11 @@ def closed():
 
 @app.route('/insert', methods=['POST', 'GET'])
 def insert():
-    if request.method == 'POST':
 
-        task_content = request.form['content']
-        user_name = request.form['created_by']
-        new_task = Tarefa(content=task_content,created_by=user_name)
-
-        if not task_content:
-            return redirect(url_for('index'))
+    form = NewTaskForm()
+    if form.validate_on_submit():
+        new_task = Tarefa()
+        form.populate_obj(new_task)
 
         try:
             db.session.add(new_task)
@@ -71,6 +67,8 @@ def insert():
         except:
             flash('Algo deu errado ao incluir sua tarefa!')
             return redirect(url_for('index'))
+        else:
+            render_template('index.html', form=form)
 
 @app.route('/delete/<int:id>')
 def delete(id):
@@ -88,7 +86,7 @@ def delete(id):
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
     task = Tarefa.query.get_or_404(id)
-    fl_status = ['Em andamento', 'Pendente', 'Cancelado', 'Concluído']
+    fl_status = ['Novo', 'Em andamento', 'Pendente', 'Cancelado', 'Concluído']
     form = UpdateForm()
     form.content.data = task.content
     form.created_by.data = task.created_by
