@@ -1,13 +1,13 @@
 # Lembre-Me
-O Lembre-me te lembrando do que você não lembra!
+O Lembre-me é uma agenda para suas tarefas e projetos, salve e acompanhe o andamento até sua conclusão.
 
 ![image](static/images/lembre_1.png)
 
-Faça o clone do repositório em sua máquina local, navegue até a raiz da pasta e siga os passos abaixo:
+Faça o clone do repositório em sua máquina local, navegue até a raiz da pasta e siga o passo a passo abaixo:
 
-## Como iniciar esse projeto.
+## Como iniciar a aplicação:
 
-### 1. Crie o ambiente virtual:
+### 1. Crie o ambiente virtual
 ```
 $ pip -m venv env
 ```
@@ -17,7 +17,7 @@ $ pip -m venv env
 $ source env/bin/activate
 ```
 
-## 3. Instale as bibliotecas necessárias:
+## 3. Instale as bibliotecas necessárias e crie o arquivo .env na raiz onde será declarada a variável SECRET_KEY:
 ```
 $ (env) pip install -r requirements.txt
 ```
@@ -26,3 +26,6 @@ $ (env) pip install -r requirements.txt
 ```
 $ (env) python app.py
 ```
+
+## Contribuição:
+Caso queira contribuir com esse projeto abra um PR com sua contribuição.
