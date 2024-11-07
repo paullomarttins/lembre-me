@@ -241,8 +241,8 @@ width: 3rem;
 
 .flashes {
   padding: 12px;
-  border-radius: 5px;
-  background-color: khaki;
+  border-radius: 25px;
+  background-color: #EAFFE6;
   font-family: var(--font-body);
   color: black;
   margin-top: 15px;
