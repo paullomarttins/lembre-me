@@ -2,3 +2,4 @@ env
 instance
 .env
 __pycache__
+env_old
