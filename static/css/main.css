@@ -81,6 +81,10 @@ td:last-of-type {
   white-space: pre-wrap;
 }
 
+td:nth-last-of-type(2) {
+  width: 100px;
+}
+
 th{
   font-size: var(--table-th-font-size);
   padding: var(--spacing-top);
