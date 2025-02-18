@@ -128,7 +128,7 @@ def priority(id):
     num_priority = qt_priority[0][0] # Converte a tupla em integer
 
     # Fixando apenas 3 prioridades
-    if num_priority <= 2 and task.progress != 'Pendente':
+    if num_priority <= 2 and task.progress != 'Pendente' or task.progress != 'Concluído':
 
         if not task.dt_final:
             task.dt_priority = datetime.now()
