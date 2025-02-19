@@ -9,7 +9,7 @@ Faça o clone do repositório em sua máquina local, navegue até a raiz da past
 
 ### 1. Crie o ambiente virtual
 ```
-$ pip -m venv env
+$ python -m venv env
 ```
 
 ### 2. Agora inicie o ambiente:
