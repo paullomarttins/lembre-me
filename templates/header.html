@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<nav class="navbar">
+    <!--nav title-->
+<a href="{{ url_for('index') }}" class="link-opacity-75-hover link-light" title="Home">lembre-me-project</a>
+    <!--fim nav title-->
+
+    <!--nav dropdown menu-->    
+<div class="dropstart">
+        <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+             <i class="bi bi-list"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-dark">
+          <li><button class="dropdown-item" type="button">
+            <a href="#" class="nav nav-link link-light" title="Sobre">Sobre</a>
+        </button></li>
+          <li><button class="dropdown-item" type="button">
+            <a href="{{ url_for('closed') }}" class="nav nav-link link-light" title="Tarefas">Tarefas</a>
+          </button></li>
+          <li><button class="dropdown-item" type="button">
+            <a href="#" class="nav nav-link link-light" title="RSS">RSS</a>
+          </button></li>
+        </ul>
+      </div>
+</nav>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+
+{% endblock %}

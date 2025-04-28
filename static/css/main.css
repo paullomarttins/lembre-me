@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Sniglet:wght@400;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rozha+One&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root{
+  --background-color: #31363F;
+  --second-color: #222831;
+  --title-color: #76ABAE;
+  --light-color: #EEEEEE;
+  --font-title: "Sniglet", system-ui;
+  --font-body: "Ubuntu Mono", monospace;
+}
+
+nav {
+  font-family: var(--font-title);
+  background-color: var(--second-color);
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+}
+
+a {
+  text-decoration: none;
+}
+
+table, td, th {
+  border: 2px solid var(--background-color);
+  background-color: var(--second-color);
+  font-family: var(--font-body);
+  color: var(--light-color);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border-radius: 50%;
+}
+
+td {
+  text-align: center;
+  font-size: var(--body-font-size);
+}
+
+th{
+  font-size: var(--table-th-font-size);
+  padding: var(--spacing-top);
+  text-transform: uppercase;
+}

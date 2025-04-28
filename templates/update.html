@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% include 'header.html' %}
+
+<title>{{ title }}</title>
+
+{% block body %}
+
+<div class="content-fluid bg-dark mb-3">
+    <h6 class="text-center">Atualize sua tarefa! 💬</h6>
+        <form action="/update/{{ task.id }}" method="POST">
+            {{ form.hidden_tag() }}
+            {{ form.content.label }}
+            {{ form.content(size=50, placeholder="Edite sua tarefa...", id="content-title") }}
+
+            <label for="content-progress" class="form-label">Status da Tarefa</label>
+            <select name="progress" id="content-progress" class="form-select">
+                <option value="{{ task.progress }}">{{ task.progress }}</option>
+                {% for status in fl_status %}
+                    <option value="{{ status }}">{{ status }}</option>
+                {% endfor %}
+            </select>
+
+            {{ form.created_by.label }}
+            {{ form.created_by(size=20, id="created_by", disabled=True) }}
+
+            {{ form.assigned.label }}
+            {{ form.assigned(size=20, id="assigned", placeholder="Atribuído para...") }}
+
+            {{ form.observa.label }}
+            {% if task.observa %}
+                {{ form.observa(size=200, id="observa") }}
+            {% else %}
+                {{ form.observa(size=200, id="observa", placeholder="Inclua uma observação...") }}
+            {% endif %}
+            <div class="botoes">
+                {{ form.submit(class="nova-tarefa", title="Atualizar", onclick="return confirm('Tem certeza que deseja alterar essa Tarefa?')") }}
+                <a href="{{ url_for('index') }}"><button class="nova-tarefa" type="button" title="Voltar"><</button></a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

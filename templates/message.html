@@ -1,0 +1,10 @@
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-info" role="alert">
+            {{ message }}
+            <a class="btn_close" href="{{ url_for('index') }}" title="Fechar">x</a>
+        </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}

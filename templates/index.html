@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% include 'header.html' %}
+{% include 'message.html' %}
+
+<title>{{ title }}</title>
+
+{% block body %}
+
+    {% if tasks|length < 1 %}
+        <div class="d-flex justify-content-evenly">
+        <div class="p-2">Sem tarefas por aqui. Crie algumas agora!</div></div>
+        <div class="d-flex justify-content-evenly">
+    <!-- Form cadastro de Tarefa -->
+        <div class="p-2">
+        <form action="{{ url_for('insert') }}" method="POST" class="form">
+            {{ form.hidden_tag() }}
+            {{ form.content(placeholder="Titulo da tarefa...") }}
+            {{ form.created_by(placeholder="Qual é o seu nome...") }}
+            {{ form.submit(class="nova-tarefa", title="Criar Tarefa") }}
+        </form>
+        </div>
+</div>
+    {% else %}
+    <div class="d-flex flex-column mb-3">
+        <table>
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Data Criação</th>
+                <th>Atribuído Para</th>
+                <th>Data Prioridade</th>
+                <th>Progresso</th>
+                <th>Prioridade</th>
+                <th>Ação</th>
+                <th>Observação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.content }}</td>
+                <td>{{ task.dt_inicio.strftime('%d-%m-%Y %H:%M') }}</td>
+                {% if task.assigned %}
+                    <td>{{ task.assigned }}</td>
+                {% else %}
+                    <td>-</td>
+                {% endif %}
+                {% if task.dt_priority %}
+                    <td>{{ task.dt_priority.strftime('%d-%m-%Y %H:%M') }}</td>
+                {% else %}
+                    <td>-</td>
+                {% endif %}
+                <td>{{ task.progress }}</td>
+                {% if task.priority %}
+                    <td><a href="/priority/unpriority/{{ task.id }}"><img src="/static/images/checked_3.svg" title="Priorizado" onclick="return confirm('Remover prioridade?')"></a></td>
+                {% else %}
+                    <td><a href="/priority/{{ task.id }}"><img src="/static/images/unchecked_3.svg" title="Priorizar" onclick="return confirm('Deseja priorizar essa Tarefa?')"></a></td>
+                {% endif %}
+                <td>
+                    <a href="/update/{{ task.id }}"><img src="/static/images/botao_editar.svg" title="Editar"></a>
+                    <a href="/delete/{{ task.id }}"><img src="/static/images/botao_excluir.svg" title="Excluir" onclick="return confirm('Deseja excluir essa Tarefa?')"></a>
+                </td>
+                {% if task.observa %}
+                    <td>{{ task.observa }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+    <!-- Paginador -->
+    <div class="d-flex flex-column mb-3">
+        <nav aria-label="Page navigation">
+            <ul class="pagination pagination-sm m-0">
+            {% for page_num in pagination.iter_pages() %}
+            {% if page_num %}
+            {% if page_num != pagination.page %}
+            <li class="page-item"><a href="/?page={{ page_num }}" class="page-link">{{ page_num }}</a></li>
+                    {% else %}
+                    <li class="page-item"><a class="page-item active">{{ page_num }}</a></li>
+                    {% endif %}
+                {% else %}
+                    <li class="page-item"><a class="page-link">...</a></li>
+                {% endif %}
+            {% endfor %}
+        
+    {% endif %}
+</ul>
+</nav>
+</div>
+{% endblock %}
