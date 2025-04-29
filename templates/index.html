@@ -1,7 +1,8 @@
-<div class="container-fluid">
+{% extends 'base.html' %}
 {% include 'header.html' %}
 {% include 'message.html' %}
 
+{% block head %}{% endblock %}
 {% block body %}
 
     {% if tasks|length < 1 %}
@@ -89,4 +90,3 @@
 </nav>
 </div>
 {% endblock %}
-</div>
